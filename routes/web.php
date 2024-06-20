@@ -18,6 +18,8 @@ use App\Http\Controllers\HomeController;
 
 Route::get("/",[HomeController::class,"index"]);
 
+Route::get("/users",[AdminController::class,"user"]);
+
 Route::get("/redirects",[HomeController::class,"redirects"]);
 
 Route::middleware([
