@@ -9,8 +9,10 @@
   </head>
 
   <body>
-  
-    @include("admin.navbar")
+  <div class="container-scroller">
+  @include("admin.navbar")
+  </div>
+   
     @include("admin.adminscript")
   </body>
   

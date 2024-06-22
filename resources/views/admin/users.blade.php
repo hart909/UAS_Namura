@@ -12,27 +12,70 @@
     @include("admin.navbar")
 
     <div style="position: relative; top: 60px; right: -150px;">
-        <table bgcolor="grey" border="3px">
+    <style>
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #f5f5f5;
+        position: relative;
+        left:150px
+    }
 
+    .table th,
+    .table td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .table th {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .table tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: #fff;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .badge-secondary {
+        background-color: #6c757d;
+        color: #fff;
+        padding: 4px 8px;
+        border-radius: 4px;
+    }
+</style>
+
+<table class="table">
+    <thead>
         <tr>
-            <th style="padding :30px">Name</th>
-            <th style="padding :30px">Email</th>
-            <th style="padding :30px">Actions</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Actions</th>
         </tr>
-        @foreach($data as $data)
-        <tr align="center">
-            <td>{{$data->name}}</td>
-            <td>{{$data->email}}</td>
-
-            @if($data->usertype=="0")
-            <td><a href="{{url('/deleteuser',$data->id)}}">Delete</a></td>
+    </thead>
+    <tbody>
+        @foreach($data as $user)
+        <tr>
+            <td>{{ $user->name }}</td>
+            <td>{{ $user->email }}</td>
+            @if($user->usertype == "0")
+            <td><button class="btn-danger">Delete</button></td>
             @else
-            <td>Not allowed</td>
+            <td><span class="badge-secondary">Not allowed</span></td>
             @endif
         </tr>
-
         @endforeach
-        </table>
+    </tbody>
+</table>
 
     </div>
 </div>
