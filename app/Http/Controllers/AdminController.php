@@ -8,6 +8,7 @@ use App\Models\User;
 
 use App\Models\Food;
 use App\Models\Reservation;
+use App\Models\Packet;
 
 class AdminController extends Controller
 {
@@ -92,5 +93,21 @@ class AdminController extends Controller
     public function viewreservation(){
         $data= reservation::all();
         return view("admin.adminreservation", compact("data"));
+    }
+    public function viewpacket(){
+        return view("admin.adminpacket");
+    }
+    public function uploadpacket(Request $request){
+
+        $data= new packet;
+        $image=$request->image;
+        $imagename=time().'.'.$image->getClientOriginalExtension();
+                $request->image->move('packetimage',$imagename);
+                $data->image=$imagename;
+
+                $data->name=$request->name;
+                $data->description=$request->description;
+                $data->save();
+                return redirect()->back();
     }
 }

@@ -1057,27 +1057,27 @@ menu
 
 /*
 ---------------------------------------------
-chefs
+packets
 ---------------------------------------------
 */
 
-#chefs {
+#packets {
   padding-top: 120px;
 }
 
-#chefs .section-heading {
+#packets .section-heading {
   margin-bottom: 70px;
 }
 
-#chefs .section-heading h6 {
+#packets .section-heading h6 {
   padding-left: 0px;
 }
 
-#chefs .section-heading h6:before {
+#packets .section-heading h6:before {
   display: none;
 }
 
-#chefs .chef-item {
+#packets .packet-item {
   text-align: center;
   border: 1px solid #afafaf;
   padding: 5px;
@@ -1085,25 +1085,25 @@ chefs
   border-radius: 3px;
 }
 
-#chefs .chef-item:hover {
+#packets .packet-item:hover {
   border-color: #fb5849;
 }
 
-#chefs .chef-item:hover .down-content h4 {
+#packets .packet-item:hover .down-content h4 {
   color: #fb5849;
 }
 
-#chefs .chef-item .thumb {
+#packets .packet-item .thumb {
   position: relative;
 }
 
-#chefs .chef-item .thumb img {
+#packets .packet-item .thumb img {
   width: 100%;
   overflow: hidden;
   position: relative;
 }
 
-#chefs .chef-item .thumb .overlay {
+#packets .packet-item .thumb .overlay {
   position: absolute;
   background-color: #2a2a2a;
   border-radius: 3px;
@@ -1117,7 +1117,7 @@ chefs
   transition: all .3s;
 }
 
-#chefs .chef-item .thumb ul.social-icons {
+#packets .packet-item .thumb ul.social-icons {
   position: absolute;
   z-index: 11;
   top: 50%;
@@ -1129,12 +1129,12 @@ chefs
   visibility: hidden;
 }
 
-#chefs .chef-item .thumb ul.social-icons li {
+#packets .packet-item .thumb ul.social-icons li {
   display: inline-block;
   margin: 0px 5px;
 }
 
-#chefs .chef-item .thumb ul.social-icons li a {
+#packets .packet-item .thumb ul.social-icons li a {
   width: 40px;
   height: 40px;
   background-color: #fff;
@@ -1146,32 +1146,32 @@ chefs
   transition: all .5s;
 }
 
-#chefs .chef-item .thumb ul.social-icons li a:hover {
+#packets .packet-item .thumb ul.social-icons li a:hover {
   background-color: #fb5849;
 }
 
-#chefs .chef-item:hover .overlay {
+#packets .packet-item:hover .overlay {
   opacity: .9;
   visibility: visible;
 }
 
-#chefs .chef-item:hover ul.social-icons {
+#packets .packet-item:hover ul.social-icons {
   opacity: 1;
   visibility: visible;
 }
 
-#chefs .chef-item .down-content {
+#packets .packet-item .down-content {
   padding: 20px 0px;
 }
 
-#chefs .chef-item .down-content h4 {
+#packets .packet-item .down-content h4 {
   transition: all .3s;
   font-size: 20px;
   font-weight: 700;
   color: #2a2a2a;
 }
 
-#chefs .chef-item .down-content span {
+#packets .packet-item .down-content span {
   font-size: 14px;
   color: #2a2a2a;
 }
@@ -1560,7 +1560,7 @@ responsive
     margin-left: 0px;
     margin-top: 30px;
   }
-  #chefs .chef-item {
+  #packets .packet-item {
     margin-bottom: 30px;
   }
   #reservation .phone {

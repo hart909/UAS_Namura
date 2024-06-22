@@ -4,7 +4,6 @@
 <html lang="en">
 
   <head>
-
     @include("admin.admincss")
   </head>
 
@@ -12,94 +11,142 @@
   <div class="container-scroller">
     @include("admin.navbar")
 
-    <div style="position: relative; top: 60px; left: 200px;">
-    <form action="{{url('/uploadfood')}}" method="post" enctype="multipart/form-data">
+    <div>
+    <style>
+    .form-container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 30px;
+        background-color: #f5f5f5;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        font-family: Arial, sans-serif;
+        color:black;
+        position: relative;
+        top: 10px;
+        left: 150px;
+    }
+    
+    .form-group {
+        margin-bottom: 20px;
+    }
 
-    @csrf
-        <div>
-            <label>Title</label>
-            <input type="text" name="title" placeholder="Write a Name" required style='color:black;'>
-        </div>
-        <div>
-            <label>Price</label>
-            <input type="number" name="price" placeholder="Put a Price" required style='color:black;'>
-        </div>
-        <div>
-            <label>Image</label>
-            <input type="file" name="image" required style='color:black;'>
-        </div>
-        <div>
-            <label>Description</label>
-            <input type="text" name="description" placeholder="Write a Description" required style='color:black;'>
-        </div>
+    .form-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
 
-        <div>
-        <button style="color:black; background-color: white;" type="submit">Save</button>
+    .form-group input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        font-size: 16px;
+    }
+
+    .form-group input[type="file"] {
+        padding: 5px;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background-color: #45a049;
+    }
+</style>
+
+<div class="form-container">
+    <form action="{{ url('/uploadfood') }}" method="post" enctype="multipart/form-data">
+        @csrf
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" placeholder="Write a Name" required>
+        </div>
+        <div class="form-group">
+            <label for="price">Price</label>
+            <input type="number" id="price" name="price" placeholder="Put a Price" required>
+        </div>
+        <div class="form-group">
+            <label for="image">Image</label>
+            <input type="file" id="image" name="image" required>
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <input type="text" id="description" name="description" placeholder="Write a Description" required>
+        </div>
+        <div class="form-group">
+            <button class="btn" type="submit">Save</button>
         </div>
     </form>
+</div>
 
     <div>
         <br>
         <style>
-    .table {
-        width: 100%;
-        border-collapse: collapse;
-        background-color: #f5f5f5;
+    .table-container {
+        max-width: 100%;
+        
         font-family: Arial, sans-serif;
     }
 
-    .table th,
-    .table td {
-        padding: 12px 15px;
-        text-align: center;
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #f5f5f5;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        position: relative;
+        top: 10px;
+        left: 150px;
+    }
+
+    th, td {
+        padding: 15px;
+        text-align: left;
         border-bottom: 1px solid #ddd;
     }
 
-    .table th {
-        background-color: #4CAF50;
-        color: white;
+    th {
+        background-color: black;
+        color: #fff;
     }
 
-    .table tr:hover {
-        background-color: #f1f1f1;
-    }
-
-    .table img {
-        max-width: 100px;
-        max-height: 100px;
-    }
-
-    .btn-danger,
-    .btn-primary {
-        display: inline-block;
-        padding: 6px 12px;
-        margin-bottom: 0;
-        font-size: 14px;
-        font-weight: normal;
-        line-height: 1.42857143;
-        text-align: center;
-        white-space: nowrap;
+    td {
         vertical-align: middle;
-        cursor: pointer;
-        border: 1px solid transparent;
-        border-radius: 4px;
+        color: black;
     }
 
-    .btn-danger {
-        color: #fff;
-        background-color: #d9534f;
-        border-color: #d43f3a;
+    td img {
+        max-width: 100px;
+        height: auto;
     }
 
-    .btn-primary {
+    .action-btn {
+        display: inline-block;
+        padding: 8px 12px;
+        background-color: #4CAF50;
         color: #fff;
-        background-color: #337ab7;
-        border-color: #2e6da4;
+        text-decoration: none;
+        border-radius: 3px;
+        transition: background-color 0.3s;
+    }
+
+    .action-btn:hover {
+        background-color: #45a049;
     }
 </style>
 
-<table class="table">
-    <thead>
+<div class="table-container">
+    <table>
         <tr>
             <th>Food Name</th>
             <th>Price</th>
@@ -108,20 +155,19 @@
             <th>Action</th>
             <th>Action2</th>
         </tr>
-    </thead>
-    <tbody>
-        @foreach($data as $item)
+
+        @foreach($data as $data)
         <tr>
-            <td>{{ $item->title }}</td>
-            <td>{{ $item->price }}</td>
-            <td>{{ $item->description }}</td>
-            <td><img src="/foodimage/{{ $item->image }}" alt="{{ $item->title }}"></td>
-            <td><a class="btn btn-danger" href="{{ url('/deletemenu', $item->id) }}">Delete</a></td>
-            <td><a class="btn btn-primary" href="{{ url('/updateview', $item->id) }}">Update</a></td>
+            <td>{{ $data->title }}</td>
+            <td>{{ $data->price }}</td>
+            <td>{{ $data->description }}</td>
+            <td><img src="/foodimage/{{ $data->image }}" alt="{{ $data->title }}"></td>
+            <td><a class="action-btn" href="{{ url('/deletemenu', $data->id) }}">Delete</a></td>
+            <td><a class="action-btn" href="{{ url('/updateview', $data->id) }}">Update</a></td>
         </tr>
         @endforeach
-    </tbody>
-</table>
+    </table>
+</div>
 
     </div>
 
@@ -129,6 +175,7 @@
 
 
 </div>
+
     @include("admin.adminscript")
   </body>
   

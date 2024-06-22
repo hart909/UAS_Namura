@@ -32,7 +32,11 @@ Route::post("/update/{id}",[AdminController::class,"update"]);
 
 Route::post("/reservation",[AdminController::class,"reservation"]);
 
+Route::post("/uploadpacket",[AdminController::class,"uploadpacket"]);
+
 Route::get("/viewreservation",[AdminController::class,"viewreservation"]);
+
+Route::get("/viewpacket",[AdminController::class,"viewpacket"]);
 
 Route::get("/deleteuser/{id}",[AdminController::class,"deleteuser"]);
 
