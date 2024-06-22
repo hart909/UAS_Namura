@@ -63,12 +63,12 @@
         </tr>
     </thead>
     <tbody>
-        @foreach($data as $user)
+        @foreach($data as $data)
         <tr>
-            <td>{{ $user->name }}</td>
-            <td>{{ $user->email }}</td>
-            @if($user->usertype == "0")
-            <td><button class="btn-danger">Delete</button></td>
+            <td>{{ $data->name }}</td>
+            <td>{{ $data->email }}</td>
+            @if($data->usertype == "0")
+            <td><a href="{{url('/deleteuser',$data->id)}}"><button class="btn-danger"><Delete</button>Delete User</td></a>
             @else
             <td><span class="badge-secondary">Not allowed</span></td>
             @endif

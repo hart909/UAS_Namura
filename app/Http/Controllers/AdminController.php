@@ -95,7 +95,8 @@ class AdminController extends Controller
         return view("admin.adminreservation", compact("data"));
     }
     public function viewpacket(){
-        return view("admin.adminpacket");
+        $data=packet::all();
+        return view("admin.adminpacket", compact("data"));
     }
     public function uploadpacket(Request $request){
 
@@ -110,4 +111,36 @@ class AdminController extends Controller
                 $data->save();
                 return redirect()->back();
     }
+    public function updatepacket($id){
+        $data=packet::find($id);
+
+        return view("admin.updatepacket",compact("data"));
+    }
+
+    public function updatefoodpacket(Request $request, $id){
+        $data=packet::find($id);
+
+        $image=$request->image;
+        if($image){
+            
+
+            $imagename=time().'.'.$image->getClientOriginalExtension();
+                    $request->image->move('packetimage',$imagename);
+                    $data->image=$imagename;
+        }
+       
+
+                $data->name=$request->name;
+                $data->description=$request->description;
+                $data->save();
+                return redirect()->back();
+        
+    }
+
+    public function deletepacket($id){
+        $data=packet::find($id);
+        $data->delete();
+        return redirect()->back();
+    }
+
 }

@@ -42,6 +42,18 @@ Route::get("/deleteuser/{id}",[AdminController::class,"deleteuser"]);
 
 Route::get("/updateview/{id}",[AdminController::class,"updateview"]);
 
+Route::get("/updatepacket/{id}",[AdminController::class,"updatepacket"]);
+
+Route::post("/updatefoodpacket/{id}",[AdminController::class,"updatefoodpacket"]);
+
+Route::get("/deletepacket/{id}",[AdminController::class,"deletepacket"]);
+
+Route::post("/addcart/{id}",[HomeController::class,"addcart"]);
+
+Route::get("/showcart/{id}",[HomeController::class,"showcart"]);
+
+Route::get("/remove/{id}",[HomeController::class,"remove"]);
+
 Route::get("/redirects",[HomeController::class,"redirects"]);
 
 Route::middleware([
