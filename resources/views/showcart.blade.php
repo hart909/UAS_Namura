@@ -129,14 +129,17 @@
         <th style="padding: 20px; border-radius: 0 20px 0 0;">Action</th>
     </tr>
 
+    <form action="{{url('orderconfirm')}}" method="post">
+    @csrf
+
     @foreach($data as $index => $item)
     <tr style="border-bottom: 1px solid #ccc;">
         <td style="padding: 20px; text-align: center;">
             <img src="foodimage/{{ $item->image }}" style="max-width: 100px; border-radius: 50%;">
         </td>
-        <td style="padding: 20px;">{{ $item->title }}</td>
-        <td style="padding: 20px;">Rp.{{ $item->price }}</td>
-        <td style="padding: 20px;">{{ $item->quantity }}</td>
+        <td style="padding: 20px;"><input type="text" name="foodname[]" value="{{ $item->title }}" hidden="">{{ $item->title }}</td>
+        <td style="padding: 20px;"><input type="text" name="price[]" value="{{ $item->price }}" hidden="">Rp.{{ $item->price }}</td>
+        <td style="padding: 20px;"><input type="text" name="quantity[]" value="{{ $item->quantity }}" hidden="">{{ $item->quantity }}</td>
         <td style="padding: 20px; text-align: center;">
             @if(isset($data2[$index]))
                 <a href="{{ url('/remove', $data2[$index]->id) }}" class="btn btn-warning" style="border-radius: 20px;">Remove</a>
@@ -147,7 +150,7 @@
 </table>
 
     <div  align="center" style="padding:10px;">
-        <button style="border-radius:15px" class="btn btn-primary" id="order">Order</button></button>
+        <button style="border-radius:15px" class="btn btn-primary" type="button" id="order">Order</button></button>
         </div>
 
     <div id="appear" align="center" style="padding:10px; display:none;">
@@ -157,20 +160,21 @@
         </div>
         <div style="padding:10px;">
             <label>Phone</label>
-            <input type="number" name="number" placeholder="Phone Number">
+            <input type="number" name="phone" placeholder="Phone Number">
         </div>
         <div style="padding:10px;"> 
             <label>Address</label>
-            <input type="text" name="Address" placeholder="Address">
+            <input type="text" name="address" placeholder="Address">
         </div>
         <div style="padding:10px">
             
             <input class="btn btn-success" type="submit" value="Order Confirm" placeholder="Name">
-            <button id="close" class="btn btn-danger">Close</button>
+            <button id="close" type="button" class="btn btn-danger">Close</button>
         </div>
     
     </div>
-</div>
+    </form>
+
 
 
 

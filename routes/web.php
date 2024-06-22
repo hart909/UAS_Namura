@@ -46,6 +46,8 @@ Route::get("/updatepacket/{id}",[AdminController::class,"updatepacket"]);
 
 Route::post("/updatefoodpacket/{id}",[AdminController::class,"updatefoodpacket"]);
 
+Route::post("/orderconfirm",[HomeController::class,"orderconfirm"]);
+
 Route::get("/deletepacket/{id}",[AdminController::class,"deletepacket"]);
 
 Route::post("/addcart/{id}",[HomeController::class,"addcart"]);
@@ -53,6 +55,10 @@ Route::post("/addcart/{id}",[HomeController::class,"addcart"]);
 Route::get("/showcart/{id}",[HomeController::class,"showcart"]);
 
 Route::get("/remove/{id}",[HomeController::class,"remove"]);
+
+Route::get("/orders",[AdminController::class,"orders"]);
+
+Route::get("/search",[AdminController::class,"search"]);
 
 Route::get("/redirects",[HomeController::class,"redirects"]);
 

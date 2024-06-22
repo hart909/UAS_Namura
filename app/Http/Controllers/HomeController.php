@@ -9,11 +9,18 @@ use App\Models\User;
 use App\Models\Food;
 use App\Models\Packet;
 use App\Models\Cart;
+use App\Models\Order;
 
 class HomeController extends Controller
 {
     public function index()
     {
+        if(Auth::id())
+        {
+            return redirect('redirects');
+        }
+        else
+
         $data=food::all();
         $data2=packet::all();
         return view("home",compact("data","data2"));
@@ -61,16 +68,35 @@ class HomeController extends Controller
 {  
 
             $count=cart::where('user_id',$id)->count();
+            if(Auth::id()==$id){
             $data2=cart::select('*')->where('user_id','=',$id)->get();
             $data = cart::where('user_id', $id)->join('food', 'carts.food_id', '=', 'food.id')->get();
             return view('showcart',compact('count','data','data2'));
-        
-
+}
+else{
+    return redirect()->back();
+}
 }
 public function remove($id){
     $data=cart::find($id);
     $data->delete();
 
+    return redirect()->back();
+}
+public function orderconfirm(Request $request)
+{
+    foreach($request->foodname as $key=>$foodname)
+    {
+        $data= new order;
+        $data->foodname=$foodname;
+        $data->price=$request->price[$key];
+        $data->quantity=$request->quantity[$key];
+        $data->name=$request->name;
+        $data->phone=$request->phone;
+        $data->address=$request->address;
+
+        $data->save();
+    }
     return redirect()->back();
 }
 }
