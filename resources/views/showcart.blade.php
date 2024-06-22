@@ -26,6 +26,8 @@
 
     <link rel="stylesheet" href="assets/css/lightbox.css">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
     </head>
     
     <body>
@@ -69,15 +71,7 @@
                         -->
                             <li class="scroll-to-section"><a href="{{url('/redirects')}}">Menu</a></li>
                             <li class="scroll-to-section"><a href="{{url('/redirects')}}">Packet</a></li> 
-                            <li class="submenu">
-                                <a href="javascript:;">Features</a>
-                                <ul>
-                                    <li><a href="#">Features Page 1</a></li>
-                                    <li><a href="#">Features Page 2</a></li>
-                                    <li><a href="#">Features Page 3</a></li>
-                                    <li><a href="#">Features Page 4</a></li>
-                                </ul>
-                            </li>
+                            
                             <!-- <li class=""><a rel="sponsored" href="https://templatemo.com" target="_blank">External URL</a></li> -->
                             <li class="scroll-to-section"><a href="{{url('/redirects')}}">Contact Us</a></li>
                             
@@ -135,45 +129,46 @@
         <th style="padding: 20px; border-radius: 0 20px 0 0;">Action</th>
     </tr>
 
-    @foreach($data as $data)
+    @foreach($data as $index => $item)
     <tr style="border-bottom: 1px solid #ccc;">
-        <td style="padding: 20px; text-align: center;"><img src="foodimage/{{ $data->image }}" style="max-width: 100px; border-radius: 50%;"></td>
-        <td style="padding: 20px;">{{ $data->title }}</td>
-        <td style="padding: 20px;">Rp.{{ $data->price }}</td>
-        <td style="padding: 20px;">{{ $data->quantity }}</td>
-
-    </tr>
-    @endforeach
-
-    @foreach($data2 as $data2)
-    <tr>
-        <td colspan="5" style="position: relative; top: -450px;right: 0px;text-align: right; padding: 40px;">
-            <a href="{{url('/remove',$data2->id)}}" class="btn btn-warning" style="border-radius:20px;">Remove</a>
+        <td style="padding: 20px; text-align: center;">
+            <img src="foodimage/{{ $item->image }}" style="max-width: 100px; border-radius: 50%;">
+        </td>
+        <td style="padding: 20px;">{{ $item->title }}</td>
+        <td style="padding: 20px;">Rp.{{ $item->price }}</td>
+        <td style="padding: 20px;">{{ $item->quantity }}</td>
+        <td style="padding: 20px; text-align: center;">
+            @if(isset($data2[$index]))
+                <a href="{{ url('/remove', $data2[$index]->id) }}" class="btn btn-warning" style="border-radius: 20px;">Remove</a>
+            @endif
         </td>
     </tr>
     @endforeach
 </table>
-    <div align="center" style="padding:10px;">
-        <button style="border-radius:15px" class="btn btn-primary">Order</button>
-    </div>
 
-    <div align="center" style="padding:10px">
-        <div>
+    <div  align="center" style="padding:10px;">
+        <button style="border-radius:15px" class="btn btn-primary" id="order">Order</button></button>
+        </div>
+
+    <div id="appear" align="center" style="padding:10px; display:none;">
+        <div style="padding:10px;">
             <label>Name</label>
             <input type="text" name="name" placeholder="Name">
         </div>
-        <div>
+        <div style="padding:10px;">
             <label>Phone</label>
-            <input type="numebr" name="number" placeholder="Phone Number">
+            <input type="number" name="number" placeholder="Phone Number">
         </div>
-        <div>
+        <div style="padding:10px;"> 
             <label>Address</label>
             <input type="text" name="Address" placeholder="Address">
         </div>
         <div style="padding:10px">
             
             <input class="btn btn-success" type="submit" value="Order Confirm" placeholder="Name">
+            <button id="close" class="btn btn-danger">Close</button>
         </div>
+    
     </div>
 </div>
 
@@ -181,7 +176,21 @@
 
 
 
+    <script type="text/javascript">
+        $("#order").click(
+            function()
+            {
+                $("#appear").show();
+            }
+        );
+        $("#close").click(
+            function()
+            {
+                $("#appear").hide();
+            }
+        );
 
+    </script>
     
      <!-- jQuery -->
     <script src="assets/js/jquery-2.1.0.min.js"></script>
