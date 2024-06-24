@@ -10,6 +10,7 @@
         body {
             font-family: 'Montserrat', sans-serif;
             background-color: #f5f5f5;
+            color:white;
         }
         .form-container {
             background-color: #fff;
@@ -63,6 +64,24 @@
             height: auto;
             border-radius: 5px;
         }
+        .form-control {
+            background-color: white;
+            color: black;
+        }
+
+        .form-group label {
+            color: black;
+        }
+
+        .form-control option {
+            background-color: white;
+            color: black;
+        }
+
+        .form-control:focus option {
+            background-color: white;
+            color: black;
+        }
     </style>
 </head>
 <body>
@@ -83,6 +102,14 @@
                     <label for="description">Description</label>
                     <input type="text" class="form-control" id="description" name="description" value="{{($data->description)}}" required>
                 </div>
+                <div class="form-group">
+    <label for="tags">Tags</label>
+    <select class="form-control" id="tags" name="tags" required placeholder="Select Tags">
+        <option value="Best Seller">Best Seller</option>
+        <option value="Signature">Signature</option>
+        <option value="Oriental">Oriental</option>
+    </select>
+</div>
                 <div class="img-container">
                     <label>Old Image</label>
                     <img class="img-fluid" src="/foodimage/{{($data->image)}}" alt="">

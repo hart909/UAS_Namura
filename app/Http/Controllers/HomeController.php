@@ -30,9 +30,8 @@ class HomeController extends Controller
     {
         $data=food::all();
         $data2=packet::all();
-
         $usertype= Auth::user()->usertype;
-
+        
         if($usertype=='1')
         {
             return view('admin.adminhome');
@@ -99,4 +98,21 @@ public function orderconfirm(Request $request)
     }
     return redirect()->back();
 }
+
+public function bestseller($tags)
+{
+    $foods = Food::where('tags', $tags)->get(); // Mengambil semua data makanan dengan tag yang sesuai
+    return view('bestseller', compact('foods'));
+}
+public function signature($tags)
+{
+    $foods = Food::where('tags', $tags)->get(); // Mengambil semua data makanan dengan tag yang sesuai
+    return view('signature', compact('foods'));
+}
+public function oriental($tags)
+{
+    $foods = Food::where('tags', $tags)->get(); // Mengambil semua data makanan dengan tag yang sesuai
+    return view('oriental', compact('foods'));
+}
+
 }

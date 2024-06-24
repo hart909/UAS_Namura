@@ -46,7 +46,7 @@ class AdminController extends Controller
         $imagename=time().'.'.$image->getClientOriginalExtension();
                 $request->image->move('foodimage',$imagename);
                 $data->image=$imagename;
-
+                $data->tags=$request->tags;
                 $data->title=$request->title;
                 $data->price=$request->price;
                 $data->description=$request->description;
@@ -62,8 +62,8 @@ class AdminController extends Controller
         $imagename=time().'.'.$image->getClientOriginalExtension();
                 $request->image->move('foodimage',$imagename);
                 $data->image=$imagename;
-
                 $data->title=$request->title;
+                $data->tags=$request->tags;
                 $data->price=$request->price;
                 $data->description=$request->description;
                 $data->save();
