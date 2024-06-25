@@ -17,6 +17,7 @@ use App\Http\Controllers\AdminController;
 */
 
 Route::get("/", [HomeController::class, "index"]);
+Route::get("/home", [HomeController::class, "index"]);
 
 Route::get("/users/{order?}/{sort?}", [AdminController::class, "user"]);
 
@@ -71,7 +72,9 @@ Route::get("/bestseller/{tags}", [HomeController::class, "bestseller"]);
 Route::get("/signature/{tags}", [HomeController::class, "signature"]);
 Route::get("/oriental/{tags}", [HomeController::class, "oriental"]);
 
-Route::get("/redirects", [HomeController::class, "redirects"]);
+Route::get("/redirects", [HomeController::class, "redirects"])->name(
+    "redirects"
+);
 
 Route::middleware([
     "auth:sanctum",
