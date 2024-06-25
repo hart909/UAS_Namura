@@ -2,7 +2,7 @@
 <html lang="en">
 
   <head>
-<base href="/public">
+    <base href="/public">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -26,8 +26,6 @@
 
     <link rel="stylesheet" href="assets/css/lightbox.css">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
     </head>
     
     <body>
@@ -50,14 +48,14 @@
                 <div class="col-12">
                     <nav class="main-nav">
                         <!-- ***** Logo Start ***** -->
-                        <a href="{{url('/redirects')}}" class="logo">
+                        <a href="/redirects" class="logo">
                         <img src="assets/images/logo.png"  style="width: 200px; height: auto;">
                         </a>
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                            <li class="scroll-to-section"><a href="{{url('/redirects')}}" class="active">Home</a></li>
-                            <li class="scroll-to-section"><a href="{{url('/redirects')}}">About</a></li>
+                            <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
+                            <li class="scroll-to-section"><a href="#about">About</a></li>
                            	
                         <!-- 
                             <li class="submenu">
@@ -69,17 +67,17 @@
                                 </ul>
                             </li>
                         -->
-                            <li class="scroll-to-section"><a href="{{url('/redirects')}}">Menu</a></li>
-                            <li class="scroll-to-section"><a href="{{url('/redirects')}}">Package</a></li> 
-                            <li class="scroll-to-section"><a href="{{url('/redirects')}}">Category</a></li>
-                            <!-- <li class=""><a rel="sponsored" href="https://templatemo.com" target="_blank">External URL</a></li> -->
-                            <li class="scroll-to-section"><a href="{{url('/redirects')}}">Contact Us</a></li>
+                            <li class="scroll-to-section"><a href="#menu">Menu</a></li>
+                            <li class="scroll-to-section"><a href="#packet">Package</a></li> 
+                            <li class="scroll-to-section"><a href="#category">Category</a></li>
+                        
+                            <li class="scroll-to-section"><a href="#reservation">Contact Us</a></li>
                             
-                            <li class="scroll-to-section"><a href="{{url('/redirects')}}">
+                            <li class="scroll-to-section"><a href="#reservation">
 @auth
 <a href="{{url('/showcart',Auth::user()->id)}}"><svg style="position: relative; top:-30px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
   <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
-</svg><p style="position: relative; top:-30px;">[{{$count}}]</p></a>
+</svg><p style="position: relative; top:-30px;"></p></a>
 @endauth
 
 @guest
@@ -107,6 +105,8 @@
                     @endauth
                 </div>
             @endif
+
+
                            </li> 
                         </ul>        
                         <a class='menu-trigger'>
@@ -119,85 +119,35 @@
         </div>
     </header>
     <!-- ***** Header Area End ***** -->
-    <div id="top">
-    <table align="center" style="width: 80%; border-collapse: collapse;">
-    <tr style="background-color: #333; color: #fff;">
-        <th style="padding: 20px; border-radius: 20px 0 0 0;">Image</th>
-        <th style="padding: 20px;">Name</th>
-        <th style="padding: 20px;">Price</th>
-        <th style="padding: 20px;">Quantity</th>
-        <th style="padding: 20px; border-radius: 0 20px 0 0;">Action</th>
-    </tr>
 
-    <form action="{{url('orderconfirm')}}" method="post">
-    @csrf
-
-    @foreach($data as $index => $item)
-    <tr style="border-bottom: 1px solid #ccc;">
-        <td style="padding: 20px; text-align: center;">
-            <img src="foodimage/{{ $item->image }}" style="max-width: 100px; border-radius: 50%;">
-        </td>
-        <td style="padding: 20px;"><input type="text" name="foodname[]" value="{{ $item->title }}" hidden="">{{ $item->title }}</td>
-        <td style="padding: 20px;"><input type="text" name="price[]" value="{{ $item->price }}" hidden="">Rp.{{ $item->price }}</td>
-        <td style="padding: 20px;"><input type="text" name="quantity[]" value="{{ $item->quantity }}" hidden="">{{ $item->quantity }}</td>
-        <td style="padding: 20px; text-align: center;">
-            @if(isset($data2[$index]))
-                <a href="{{ url('/remove', $data2[$index]->id) }}" class="btn btn-warning" style="border-radius: 20px;">Remove</a>
-            @endif
-        </td>
-    </tr>
-    @endforeach
-</table>
-
-    <div  align="center" style="padding:10px;">
-        <button style="border-radius:15px" class="btn btn-primary" type="button" id="order">Order</button></button>
+<div class="menu-item-carousel">
+    <div class="col-lg-12">
+        <div class="owl-menu-item owl-carousel">
+            @foreach($foods as $food)
+                <form action="{{ url('/addcart', $food->id) }}" method="post">
+                    @csrf    
+                    <div class="item">
+                        <div style="background-image: url('/foodimage/{{ $food->image }}');" class='card'>
+                            <div class="price"><h6>{{ $food->price }}</h6></div>
+                            <div class='info'>
+                                <h1 class='title'>{{ $food->title }}</h1>
+                                <p class='description'>{{ $food->description }}</p>
+                                <div class="main-text-button">
+                                    <div class="scroll-to-section"><a href="#reservation">Make Reservation <i class="fa fa-angle-down"></i></a></div>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="number" name="quantity" min="1" value="1" style="width: 80px;">
+                        <input type="submit" value="add cart">
+                    </div>
+                </form>
+            @endforeach
         </div>
-
-    <div id="appear" align="center" style="padding:10px; display:none;">
-        <div style="padding:10px;">
-            <label>Name</label>
-            <input type="text" name="name" placeholder="Name">
-        </div>
-        <div style="padding:10px;">
-            <label>Phone</label>
-            <input type="number" name="phone" placeholder="Phone Number">
-        </div>
-        <div style="padding:10px;"> 
-            <label>Address</label>
-            <input type="text" name="address" placeholder="Address">
-        </div>
-        <div style="padding:10px">
-            
-            <input class="btn btn-success" type="submit" value="Order Confirm" placeholder="Name">
-            <button id="close" type="button" class="btn btn-danger">Close</button>
-        </div>
-    
     </div>
-    </form>
+</div>
 
-
-
-
-
-
-    <script type="text/javascript">
-        $("#order").click(
-            function()
-            {
-                $("#appear").show();
-            }
-        );
-        $("#close").click(
-            function()
-            {
-                $("#appear").hide();
-            }
-        );
-
-    </script>
-    
-     <!-- jQuery -->
-    <script src="assets/js/jquery-2.1.0.min.js"></script>
+<!-- jQuery -->
+<script src="assets/js/jquery-2.1.0.min.js"></script>
 
 <!-- Bootstrap -->
 <script src="assets/js/popper.js"></script>

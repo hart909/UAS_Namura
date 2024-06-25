@@ -36,7 +36,7 @@
                         
                         <div class="row">
                             <div class="col-lg-12">
-                                <h4>Table Reservation</h4>
+                                <h4>Reservation</h4>
                             </div>
                             <div class="col-lg-6 col-sm-12">
                               <fieldset>
@@ -56,9 +56,9 @@
                             <div class="col-md-6 col-sm-12">
                             <select name="packet">
                              <option value="">Select your packet</option>
-                            <option value="50">50</option>
-                             <option value="100">100</option>
-                              <option value="200">200</option>
+                             @foreach($data2 as $packet)
+                            <option value="{{$packet->name}}">{{$packet->name}}</option>
+                             @endforeach
                             </select>
                             </div>
                             <div class="col-lg-6">

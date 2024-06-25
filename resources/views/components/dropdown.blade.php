@@ -1,22 +1,7 @@
 @props(['align' => 'right', 'width' => '48', 'contentClasses' => 'py-1 bg-white', 'dropdownClasses' => ''])
 
 @php
-switch ($align) {
-    case 'left':
-        $alignmentClasses = 'ltr:origin-top-left rtl:origin-top-right start-0';
-        break;
-    case 'top':
-        $alignmentClasses = 'origin-top';
-        break;
-    case 'none':
-    case 'false':
-        $alignmentClasses = '';
-        break;
-    case 'right':
-    default:
-        $alignmentClasses = 'ltr:origin-top-right rtl:origin-top-left end-0';
-        break;
-}
+$alignmentClasses = 'end-0 origin-top-right'; // Set dropdown to appear at top-right corner
 
 switch ($width) {
     case '48':
