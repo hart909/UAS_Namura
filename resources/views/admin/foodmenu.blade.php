@@ -30,7 +30,21 @@
     .form-group {
         margin-bottom: 20px;
     }
+    .form-control {
+            background-color: white;
+            color: black;
+        }
 
+        .form-control::placeholder {
+            color: black;
+        }
+
+        .form-group label {
+            color: black;
+        }
+    .label{
+        background-color:white;
+    }
     .form-group label {
         display: block;
         font-weight: bold;
@@ -76,6 +90,15 @@
             <label for="price">Price</label>
             <input type="number" id="price" name="price" placeholder="Put a Price" required>
         </div>
+        <div class="form-group">
+    <label for="tags">Tags
+    <select class="form-control" id="tags" name="tags" required placeholder="Select Tags">
+        <option value="Best Seller">Best Seller</option>
+        <option value="Signature">Signature</option>
+        <option value="Oriental">Oriental</option>
+    </select>
+    </label>
+</div>
         <div class="form-group">
             <label for="image">Image</label>
             <input type="file" id="image" name="image" required>
@@ -151,6 +174,7 @@
             <th>Food Name</th>
             <th>Price</th>
             <th>Description</th>
+            <th>Tags</th>
             <th>Image</th>
             <th>Action</th>
             <th>Action2</th>
@@ -161,6 +185,7 @@
             <td>{{ $data->title }}</td>
             <td>{{ $data->price }}</td>
             <td>{{ $data->description }}</td>
+            <td>{{ $data->tags }}</td>
             <td><img src="/foodimage/{{ $data->image }}" alt="{{ $data->title }}"></td>
             <td><a class="action-btn" href="{{ url('/deletemenu', $data->id) }}">Delete</a></td>
             <td><a class="action-btn" href="{{ url('/updateview', $data->id) }}">Update</a></td>

@@ -60,6 +60,11 @@ Route::get("/orders",[AdminController::class,"orders"]);
 
 Route::get("/search",[AdminController::class,"search"]);
 
+Route::get('/bestseller/{tags}', [HomeController::class, 'bestseller']);
+Route::get('/signature/{tags}', [HomeController::class, 'signature']);
+Route::get('/oriental/{tags}', [HomeController::class, 'oriental']);
+
+
 Route::get("/redirects",[HomeController::class,"redirects"]);
 
 Route::middleware([
