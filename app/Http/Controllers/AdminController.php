@@ -13,10 +13,32 @@ use App\Models\Order;
 
 class AdminController extends Controller
 {
-    public function user()
+    public function user(Request $request, $order = null, $sort = null)
     {
-        $data = user::all();
-        return view("admin.users", compact("data"));
+        if ($sort && $order) {
+            $data = user::orderBy($order, $sort)->get();
+        } elseif (
+            ($request->role == 1 || $request->role == 0) &&
+            $request->role != 2 &&
+            $request->role != null
+        ) {
+            $data = user::where("usertype", $request->role)->get();
+        } else {
+            $data = user::where("name", "Like", "%" . $request->search . "%")
+                ->orWhere("email", "Like", "%" . $request->search . "%")
+                ->get();
+        }
+        $role = [
+            [
+                "id" => 0,
+                "name" => "User",
+            ],
+            [
+                "id" => 1,
+                "name" => "Admin",
+            ],
+        ];
+        return view("admin.users", compact(["data", "role"]));
     }
 
     public function deleteuser($id)
@@ -26,10 +48,22 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-    public function foodmenu()
+    public function foodmenu(Request $request, $order = null, $sort = null)
     {
-        $data = food::all();
-        return view("admin.foodmenu", compact("data"));
+        if ($sort && $order) {
+            $data = food::orderBy($order, $sort)->get();
+        } elseif ($request->tags) {
+            $data = food::where("tags", $request->tags)->get();
+        } else {
+            $data = food::where("title", "Like", "%" . $request->search . "%")
+                ->orWhere("description", "Like", "%" . $request->search . "%")
+                ->orWhere("price", "Like", "%" . $request->search . "%")
+                ->orWhere("tags", "Like", "%" . $request->search . "%")
+                ->get();
+        }
+        $tags = food::select("tags")->get();
+        $tags = $tags->unique("tags")->values();
+        return view("admin.foodmenu", compact(["data", "tags"]));
     }
 
     public function updateview($id)
@@ -92,15 +126,39 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-    public function viewreservation()
-    {
+    public function viewreservation(
+        Request $request,
+        $order = null,
+        $sort = null
+    ) {
         if (Auth::check()) {
             // Mendapatkan pengguna yang sedang login
             $user = Auth::user();
 
             // Memeriksa tipe pengguna
             if ($user->usertype == 1) {
-                $data = reservation::all();
+                if ($sort && $order) {
+                    $data = reservation::orderBy($order, $sort)->get();
+                } elseif ($request->min && $request->max) {
+                    $data = reservation::whereBetween("date", [
+                        $request->min,
+                        $request->max,
+                    ])->get();
+                } else {
+                    $data = reservation::where(
+                        "name",
+                        "Like",
+                        "%" . $request->search . "%"
+                    )
+                        ->orWhere("email", "Like", "%" . $request->search . "%")
+                        ->orWhere("phone", "Like", "%" . $request->search . "%")
+                        ->orWhere(
+                            "message",
+                            "Like",
+                            "%" . $request->search . "%"
+                        )
+                        ->get();
+                }
                 return view("admin.adminreservation", compact("data"));
             } else {
                 return redirect("login"); // Ubah  sesuai dengan halaman tujuan pengguna biasa
@@ -110,7 +168,7 @@ class AdminController extends Controller
         }
     }
 
-    public function viewpacket()
+    public function viewpacket(Request $request, $order = null, $sort = null)
     {
         if (Auth::check()) {
             // Mendapatkan pengguna yang sedang login
@@ -118,7 +176,15 @@ class AdminController extends Controller
 
             // Memeriksa tipe pengguna
             if ($user->usertype == 1) {
-                $data = packet::all();
+                if ($sort && $order) {
+                    $data = packet::orderBy($order, $sort)->get();
+                } else {
+                    $data = packet::where(
+                        "name",
+                        "Like",
+                        "%" . $request->search . "%"
+                    )->get();
+                }
                 return view("admin.adminpacket", compact("data"));
             } else {
                 // Arahkan pengguna biasa ke halaman lain, misalnya halaman home
@@ -187,9 +253,24 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-    public function orders()
+    public function orders(Request $request, $order = null, $sort = null)
     {
-        $data = order::all();
+        if ($sort && $order) {
+            $data = order::orderBy($order, $sort)->get();
+        } else {
+            $data = order::all();
+        }
+
+        if ($request->min && $request->max) {
+            foreach ($data as $value) {
+                $value->total = $value->price * $value->quantity;
+            }
+
+            $data = $data
+                ->whereBetween("total", [$request->min, $request->max])
+                ->values();
+        }
+
         return view("admin.orders", compact("data"));
     }
     public function search(Request $request)

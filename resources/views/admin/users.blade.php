@@ -10,15 +10,32 @@
   <body>
   <div class="container-scroller">
     @include("admin.navbar")
+    <div class="flex-col">
+    <div class="flex-col my-3">
+    <form style="position:relative; left:100px" action="{{url('/users')}}" method="get">
+        <input type="text" name="search" style="color:blue;">
+        <input type="submit" value="search" class="btn btn-success;">
+      </form>
 
-    <div style="position: relative; top: 60px; right: -150px;">
+      <form class="mt-3" style="position:relative; left:100px" action="{{url('/users')}}" method="get">
+        <p class="mb-0">Role:</p>
+        <select style="color:blue;" name="role" id="">
+            <option value="2">Select Role</option>
+            @foreach ($role as $value)
+            <option value="{{$value['id']}}">{{$value['name']}}</option>
+            @endforeach
+        </select>
+        <input type="submit" value="filter" class="btn btn-success;">
+      </form>
+    </div>
+    <div style="">
     <style>
     .table {
         width: 100%;
         border-collapse: collapse;
         background-color: #f5f5f5;
         position: relative;
-        left:150px
+        left:100px
     }
 
     .table th,
@@ -57,8 +74,8 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Name</th>
-            <th>Email</th>
+            <th>Name <a href="{{url('/users/name/asc')}}"><i class="fa-solid fa-arrow-up-wide-short"></i></a> <a href="{{url('/users/name/desc')}}"><i class="fa-solid fa-arrow-down-wide-short"></i></a></th>
+            <th>Email <a href="{{url('/users/email/asc')}}"><i class="fa-solid fa-arrow-up-wide-short"></i></a> <a href="{{url('/users/email/desc')}}"><i class="fa-solid fa-arrow-down-wide-short"></i></a></th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -78,6 +95,7 @@
 </table>
 
     </div>
+</div>
 </div>
     @include("admin.adminscript")
   </body>

@@ -16,63 +16,69 @@ use App\Http\Controllers\AdminController;
 |
 */
 
+Route::get("/", [HomeController::class, "index"]);
 
+Route::get("/users/{order?}/{sort?}", [AdminController::class, "user"]);
 
-Route::get("/",[HomeController::class,"index"]);
+Route::get("/deletemenu/{id}", [AdminController::class, "deletemenu"]);
 
-Route::get("/users",[AdminController::class,"user"]);
+Route::get("/foodmenu/{order?}/{sort?}", [AdminController::class, "foodmenu"]);
 
-Route::get("/deletemenu/{id}",[AdminController::class,"deletemenu"]);
+Route::post("/uploadfood", [AdminController::class, "upload"]);
 
-Route::get("/foodmenu",[AdminController::class,"foodmenu"]);
+Route::post("/update/{id}", [AdminController::class, "update"]);
 
-Route::post("/uploadfood",[AdminController::class,"upload"]);
+Route::post("/reservation", [AdminController::class, "reservation"]);
 
-Route::post("/update/{id}",[AdminController::class,"update"]);
+Route::post("/uploadpacket", [AdminController::class, "uploadpacket"]);
 
-Route::post("/reservation",[AdminController::class,"reservation"]);
+Route::get("/viewreservation/{order?}/{sort?}", [
+    AdminController::class,
+    "viewreservation",
+]);
 
-Route::post("/uploadpacket",[AdminController::class,"uploadpacket"]);
+Route::get("/viewpacket/{order?}/{sort?}", [
+    AdminController::class,
+    "viewpacket",
+]);
 
-Route::get("/viewreservation",[AdminController::class,"viewreservation"]);
+Route::get("/deleteuser/{id}", [AdminController::class, "deleteuser"]);
 
-Route::get("/viewpacket",[AdminController::class,"viewpacket"]);
+Route::get("/updateview/{id}", [AdminController::class, "updateview"]);
 
-Route::get("/deleteuser/{id}",[AdminController::class,"deleteuser"]);
+Route::get("/updatepacket/{id}", [AdminController::class, "updatepacket"]);
 
-Route::get("/updateview/{id}",[AdminController::class,"updateview"]);
+Route::post("/updatefoodpacket/{id}", [
+    AdminController::class,
+    "updatefoodpacket",
+]);
 
-Route::get("/updatepacket/{id}",[AdminController::class,"updatepacket"]);
+Route::post("/orderconfirm", [HomeController::class, "orderconfirm"]);
 
-Route::post("/updatefoodpacket/{id}",[AdminController::class,"updatefoodpacket"]);
+Route::get("/deletepacket/{id}", [AdminController::class, "deletepacket"]);
 
-Route::post("/orderconfirm",[HomeController::class,"orderconfirm"]);
+Route::post("/addcart/{id}", [HomeController::class, "addcart"]);
 
-Route::get("/deletepacket/{id}",[AdminController::class,"deletepacket"]);
+Route::get("/showcart/{id}", [HomeController::class, "showcart"]);
 
-Route::post("/addcart/{id}",[HomeController::class,"addcart"]);
+Route::get("/remove/{id}", [HomeController::class, "remove"]);
 
-Route::get("/showcart/{id}",[HomeController::class,"showcart"]);
+Route::get("/orders/{order?}/{sort?}", [AdminController::class, "orders"]);
 
-Route::get("/remove/{id}",[HomeController::class,"remove"]);
+Route::get("/search", [AdminController::class, "search"]);
 
-Route::get("/orders",[AdminController::class,"orders"]);
+Route::get("/bestseller/{tags}", [HomeController::class, "bestseller"]);
+Route::get("/signature/{tags}", [HomeController::class, "signature"]);
+Route::get("/oriental/{tags}", [HomeController::class, "oriental"]);
 
-Route::get("/search",[AdminController::class,"search"]);
-
-Route::get('/bestseller/{tags}', [HomeController::class, 'bestseller']);
-Route::get('/signature/{tags}', [HomeController::class, 'signature']);
-Route::get('/oriental/{tags}', [HomeController::class, 'oriental']);
-
-
-Route::get("/redirects",[HomeController::class,"redirects"]);
+Route::get("/redirects", [HomeController::class, "redirects"]);
 
 Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
+    "auth:sanctum",
+    config("jetstream.auth_session"),
+    "verified",
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get("/dashboard", function () {
+        return view("dashboard");
+    })->name("dashboard");
 });

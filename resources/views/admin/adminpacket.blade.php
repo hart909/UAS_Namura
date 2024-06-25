@@ -6,7 +6,7 @@
   <head>
     @include("admin.admincss")
     <style>
-      form {
+      .create {
         position: relative;
         top:50px;
         background-color: #fff;
@@ -65,7 +65,7 @@
     <div class="container-scroller">
       @include("admin.navbar")
 
-      <form action="{{url('/uploadpacket')}}" method="post" enctype="multipart/form-data">
+      <form class="create" action="{{url('/uploadpacket')}}" method="post" enctype="multipart/form-data">
         @csrf
         <div>
           <label>Name</label>
@@ -86,10 +86,10 @@
           <input type="submit" value="Save">
         </div>
       </form>
-      
+
       <style>
   table {
-    width: 50%;
+    width: 100%;
     border-collapse: collapse;
     font-family: Arial, sans-serif;
     background-color: #f5f5f5;
@@ -126,10 +126,21 @@
   td a:hover {
     background-color: #45a049;
   }
+  .fa-solid{
+    color: white;
+  }
+  .fa-solid:hover{
+    color: lightgray;
+  }
 </style>
+<div>
+    <form class="flex my-3 pr-10" action="{{url('/viewpacket')}}" method="get">
+        <input type="text" name="search" style="color:blue;">
+        <input type="submit" value="search" class="btn btn-success ml-3 w-1/4">
+      </form>
       <table>
         <tr>
-          <th style="padding:30px">Name</th>
+          <th style="padding:30px">Name <a href="{{url('/viewpacket/name/asc')}}"><i class="fa-solid fa-arrow-up-wide-short"></i></a> <a href="{{url('/viewpacket/name/desc')}}"><i class="fa-solid fa-arrow-down-wide-short"></i></a></th>
           <th style="padding:30px">Description</th>
           <th style="padding:30px">Image</th>
           <th style="padding:30px">Action</th>
@@ -147,6 +158,7 @@
       @endforeach
 
       </table>
+    </div>
       @include("admin.adminscript")
     </div>
   </body>
