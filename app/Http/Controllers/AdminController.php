@@ -11,6 +11,7 @@ use App\Models\Reservation;
 use App\Models\Packet;
 use App\Models\Order;
 use App\Models\Payment;
+use App\Events\PaymentApprovalEvent;
 
 class AdminController extends Controller
 {
@@ -328,6 +329,9 @@ class AdminController extends Controller
             FILTER_VALIDATE_BOOLEAN
         );
         $data->save();
+        if ($data->status) {
+            event(new PaymentApprovalEvent($data->status));
+        }
 
         return redirect()->route("payments");
     }
