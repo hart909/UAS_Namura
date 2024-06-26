@@ -10,6 +10,7 @@ use App\Models\Food;
 use App\Models\Reservation;
 use App\Models\Packet;
 use App\Models\Order;
+use App\Models\Payment;
 
 class AdminController extends Controller
 {
@@ -283,5 +284,51 @@ class AdminController extends Controller
             ->get();
 
         return view("admin.orders", compact("data"));
+    }
+
+    public function payment()
+    {
+        $data = Payment::with("order")
+            ->orderBy("created_at", "desc")
+            ->get();
+
+        foreach ($data as $value) {
+            $value->name = $value->order[0]->name;
+            $value->status =
+                $value->status === null
+                    ? "No Status"
+                    : ($value->status == 1
+                        ? "Approved"
+                        : "Declined");
+            $value->orderList = "";
+            $value->total = 0;
+            foreach ($value->order as $i => $value2) {
+                $value->orderList =
+                    $i == 0
+                        ? $value2->foodname . " (" . $value2->quantity . ")"
+                        : $value->orderList .
+                            ", " .
+                            $value2->foodname .
+                            " (" .
+                            $value2->quantity .
+                            ")";
+                $value->total =
+                    $value->total + $value2->quantity * $value2->price;
+            }
+        }
+
+        return view("admin.payments", compact("data"));
+    }
+
+    public function paymentStatus(Request $request)
+    {
+        $data = Payment::find($request->id);
+        $data->status = filter_var(
+            $request->input("status"),
+            FILTER_VALIDATE_BOOLEAN
+        );
+        $data->save();
+
+        return redirect()->route("payments");
     }
 }

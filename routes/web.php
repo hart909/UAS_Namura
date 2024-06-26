@@ -85,3 +85,6 @@ Route::middleware([
         return view("dashboard");
     })->name("dashboard");
 });
+
+Route::get("/payments", [AdminController::class, "payment"])->name("payments");
+Route::get("/payments/status", [AdminController::class, "paymentStatus"]);

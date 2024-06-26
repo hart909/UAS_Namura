@@ -29,9 +29,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     </head>
-    
+
     <body>
-    
+
     <!-- ***** Preloader Start ***** -->
     <div id="preloader">
         <div class="jumper">
@@ -39,10 +39,10 @@
             <div></div>
             <div></div>
         </div>
-    </div>  
+    </div>
     <!-- ***** Preloader End ***** -->
-    
-    
+
+
     <!-- ***** Header Area Start ***** -->
     <header class="header-area header-sticky">
         <div class="container">
@@ -58,8 +58,8 @@
                         <ul class="nav">
                             <li class="scroll-to-section"><a href="{{url('/redirects')}}" class="active">Home</a></li>
                             <li class="scroll-to-section"><a href="{{url('/redirects')}}">About</a></li>
-                           	
-                        <!-- 
+
+                        <!--
                             <li class="submenu">
                                 <a href="javascript:;">Drop Down</a>
                                 <ul>
@@ -70,11 +70,11 @@
                             </li>
                         -->
                             <li class="scroll-to-section"><a href="{{url('/redirects')}}">Menu</a></li>
-                            <li class="scroll-to-section"><a href="{{url('/redirects')}}">Package</a></li> 
+                            <li class="scroll-to-section"><a href="{{url('/redirects')}}">Package</a></li>
                             <li class="scroll-to-section"><a href="{{url('/redirects')}}">Category</a></li>
                             <!-- <li class=""><a rel="sponsored" href="https://templatemo.com" target="_blank">External URL</a></li> -->
                             <li class="scroll-to-section"><a href="{{url('/redirects')}}">Contact Us</a></li>
-                            
+
                             <li class="scroll-to-section"><a href="{{url('/redirects')}}">
 @auth
 <a href="{{url('/showcart',Auth::user()->id)}}"><svg style="position: relative; top:-30px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
@@ -88,9 +88,9 @@
 </svg>
 @endguest
 </a></li>
-                           
-                           
-                           
+
+
+
                             <li>
                            @if (Route::has('login'))
                 <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right">
@@ -107,8 +107,8 @@
                     @endauth
                 </div>
             @endif
-                           </li> 
-                        </ul>        
+                           </li>
+                        </ul>
                         <a class='menu-trigger'>
                             <span></span>
                         </a>
@@ -129,7 +129,7 @@
         <th style="padding: 20px; border-radius: 0 20px 0 0;">Action</th>
     </tr>
 
-    <form action="{{url('orderconfirm')}}" method="post">
+    <form action="{{url('orderconfirm')}}" method="post" enctype="multipart/form-data">
     @csrf
 
     @foreach($data as $index => $item)
@@ -162,16 +162,20 @@
             <label>Phone</label>
             <input type="number" name="phone" placeholder="Phone Number">
         </div>
-        <div style="padding:10px;"> 
+        <div style="padding:10px;">
             <label>Address</label>
             <input type="text" name="address" placeholder="Address">
         </div>
+        <div style="padding:10px;position: relative;left: 77px;">
+            <label class="">Payment</label>
+            <input type="file" id="file" name="file" accept="image/*">
+        </div>
         <div style="padding:10px">
-            
+
             <input class="btn btn-success" type="submit" value="Order Confirm" placeholder="Name">
             <button id="close" type="button" class="btn btn-danger">Close</button>
         </div>
-    
+
     </div>
     </form>
 
@@ -195,7 +199,7 @@
         );
 
     </script>
-    
+
      <!-- jQuery -->
     <script src="assets/js/jquery-2.1.0.min.js"></script>
 
@@ -210,10 +214,10 @@
 <script src="assets/js/scrollreveal.min.js"></script>
 <script src="assets/js/waypoints.min.js"></script>
 <script src="assets/js/jquery.counterup.min.js"></script>
-<script src="assets/js/imgfix.min.js"></script> 
-<script src="assets/js/slick.js"></script> 
-<script src="assets/js/lightbox.js"></script> 
-<script src="assets/js/isotope.js"></script> 
+<script src="assets/js/imgfix.min.js"></script>
+<script src="assets/js/slick.js"></script>
+<script src="assets/js/lightbox.js"></script>
+<script src="assets/js/isotope.js"></script>
 
 <!-- Global Init -->
 <script src="assets/js/custom.js"></script>
@@ -229,7 +233,7 @@
           $("."+selectedClass).fadeIn();
           $("#portfolio").fadeTo(50, 1);
         }, 500);
-            
+
         });
     });
 

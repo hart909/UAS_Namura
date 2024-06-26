@@ -10,6 +10,7 @@ use App\Models\Food;
 use App\Models\Packet;
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\Payment;
 
 class HomeController extends Controller
 {
@@ -134,6 +135,16 @@ class HomeController extends Controller
     }
     public function orderconfirm(Request $request)
     {
+        $file = $request->file("file");
+        $fileName = time() . "_" . $file->getClientOriginalName();
+        // $filePath = $file->storeAs("uploads", $fileName, "public");
+        $destinationPath = public_path("payment");
+        $file->move($destinationPath, $fileName);
+        $filePath = $fileName;
+        $payment = new Payment();
+        $payment->image = $filePath;
+        $payment->save();
+
         foreach ($request->foodname as $key => $foodname) {
             $data = new order();
             $data->foodname = $foodname;
@@ -142,9 +153,11 @@ class HomeController extends Controller
             $data->name = $request->name;
             $data->phone = $request->phone;
             $data->address = $request->address;
+            $data->payment_id = $payment->id;
 
             $data->save();
         }
+
         return redirect()->back();
     }
 
