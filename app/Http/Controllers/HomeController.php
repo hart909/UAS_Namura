@@ -143,6 +143,7 @@ class HomeController extends Controller
         $filePath = $fileName;
         $payment = new Payment();
         $payment->image = $filePath;
+        $payment->created_by = Auth::id();
         $payment->save();
 
         foreach ($request->foodname as $key => $foodname) {
@@ -175,5 +176,42 @@ class HomeController extends Controller
     {
         $foods = Food::where("tags", $tags)->get(); // Mengambil semua data makanan dengan tag yang sesuai
         return view("oriental", compact("foods"));
+    }
+
+    public function history(Request $request, $id)
+    {
+        $count = cart::where("user_id", $id)->count();
+        if (Auth::id() == $id) {
+            $data = Payment::with("order")
+                ->where("created_by", $id)
+                ->get();
+            foreach ($data as $value) {
+                $value->name = $value->order[0]->name;
+                $value->status =
+                    $value->status === null
+                        ? "No Status"
+                        : ($value->status == 1
+                            ? "Approved"
+                            : "Declined");
+                $value->orderList = "";
+                $value->total = 0;
+                foreach ($value->order as $i => $value2) {
+                    $value->orderList =
+                        $i == 0
+                            ? $value2->foodname . " (" . $value2->quantity . ")"
+                            : $value->orderList .
+                                ", " .
+                                $value2->foodname .
+                                " (" .
+                                $value2->quantity .
+                                ")";
+                    $value->total =
+                        $value->total + $value2->quantity * $value2->price;
+                }
+            }
+            return view("history", compact("count", "data"));
+        } else {
+            return redirect()->back();
+        }
     }
 }

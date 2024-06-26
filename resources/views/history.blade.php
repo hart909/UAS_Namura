@@ -73,8 +73,6 @@
                             <li class="scroll-to-section"><a href="{{url('/redirects')}}">Package</a></li>
                             <li class="scroll-to-section"><a href="{{url('/redirects')}}">Category</a></li>
                             <li class="scroll-to-section"><a href="{{url('/history',Auth::user()->id)}}">History</a></li>                            <!-- <li class=""><a rel="sponsored" href="https://templatemo.com" target="_blank">External URL</a></li> -->
-
-                            <!-- <li class=""><a rel="sponsored" href="https://templatemo.com" target="_blank">External URL</a></li> -->
                             <li class="scroll-to-section"><a href="{{url('/redirects')}}">Contact Us</a></li>
 
                             <li class="scroll-to-section"><a href="{{url('/redirects')}}">
@@ -124,83 +122,36 @@
     <div id="top">
     <table align="center" style="width: 80%; border-collapse: collapse;">
     <tr style="background-color: #333; color: #fff;">
-        <th style="padding: 20px; border-radius: 20px 0 0 0;">Image</th>
-        <th style="padding: 20px;">Name</th>
-        <th style="padding: 20px;">Price</th>
-        <th style="padding: 20px;">Quantity</th>
-        <th style="padding: 20px; border-radius: 0 20px 0 0;">Action</th>
+        <th style="padding: 20px; border-radius: 20px 0 0 0;">Name</th>
+        <th style="padding: 20px;">Order</th>
+        <th style="padding: 20px;">Total Price</th>
+        <th style="padding: 20px;">Payment Status</th>
+        <th style="padding: 20px; border-radius: 0 20px 0 0;">Date</th>
     </tr>
-
-    <form action="{{url('orderconfirm')}}" method="post" enctype="multipart/form-data">
-    @csrf
 
     @foreach($data as $index => $item)
     <tr style="border-bottom: 1px solid #ccc;">
-        <td style="padding: 20px; text-align: center;">
-            <img src="foodimage/{{ $item->image }}" style="max-width: 100px; border-radius: 50%;">
+        <td style="padding: 20px;">
+            {{$item->name}}
         </td>
-        <td style="padding: 20px;"><input type="text" name="foodname[]" value="{{ $item->title }}" hidden="">{{ $item->title }}</td>
-        <td style="padding: 20px;"><input type="text" name="price[]" value="{{ $item->price }}" hidden="">Rp.{{ $item->price }}</td>
-        <td style="padding: 20px;"><input type="text" name="quantity[]" value="{{ $item->quantity }}" hidden="">{{ $item->quantity }}</td>
-        <td style="padding: 20px; text-align: center;">
-            @if(isset($data2[$index]))
-                <a href="{{ url('/remove', $data2[$index]->id) }}" class="btn btn-warning" style="border-radius: 20px;">Remove</a>
-            @endif
+        <td style="padding: 20px;">{{$item->orderList}}</td>
+        <td style="padding: 20px;">{{$item->total}}</td>
+        <td style="padding: 20px;">{{$item->status}}</td>
+        <td style="padding: 20px;">
+            {{$item->created_at}}
         </td>
     </tr>
     @endforeach
 </table>
 
-    <div  align="center" style="padding:10px;">
-        <button style="border-radius:15px" class="btn btn-primary" type="button" id="order">Order</button></button>
-        </div>
-
-    <div id="appear" align="center" style="padding:10px; display:none;">
-        <div style="padding:10px;">
-            <label>Name</label>
-            <input type="text" name="name" placeholder="Name">
-        </div>
-        <div style="padding:10px;">
-            <label>Phone</label>
-            <input type="number" name="phone" placeholder="Phone Number">
-        </div>
-        <div style="padding:10px;">
-            <label>Address</label>
-            <input type="text" name="address" placeholder="Address">
-        </div>
-        <div style="padding:10px;position: relative;left: 77px;">
-            <label class="">Payment</label>
-            <input type="file" id="file" name="file" accept="image/*">
-        </div>
-        <div style="padding:10px">
-
-            <input class="btn btn-success" type="submit" value="Order Confirm" placeholder="Name">
-            <button id="close" type="button" class="btn btn-danger">Close</button>
-        </div>
-
     </div>
-    </form>
 
 
 
 
 
 
-    <script type="text/javascript">
-        $("#order").click(
-            function()
-            {
-                $("#appear").show();
-            }
-        );
-        $("#close").click(
-            function()
-            {
-                $("#appear").hide();
-            }
-        );
 
-    </script>
 
      <!-- jQuery -->
     <script src="assets/js/jquery-2.1.0.min.js"></script>
