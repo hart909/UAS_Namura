@@ -88,3 +88,4 @@ Route::middleware([
 
 Route::get("/payments", [AdminController::class, "payment"])->name("payments");
 Route::get("/payments/status", [AdminController::class, "paymentStatus"]);
+// tes
