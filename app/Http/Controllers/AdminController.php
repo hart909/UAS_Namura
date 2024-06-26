@@ -13,190 +13,275 @@ use App\Models\Order;
 
 class AdminController extends Controller
 {
-    public function user()
+    public function user(Request $request, $order = null, $sort = null)
     {
-        $data= user::all();
-        return view("admin.users", compact("data"));
+        if ($sort && $order) {
+            $data = user::orderBy($order, $sort)->get();
+        } elseif (
+            ($request->role == 1 || $request->role == 0) &&
+            $request->role != 2 &&
+            $request->role != null
+        ) {
+            $data = user::where("usertype", $request->role)->get();
+        } else {
+            $data = user::where("name", "Like", "%" . $request->search . "%")
+                ->orWhere("email", "Like", "%" . $request->search . "%")
+                ->get();
+        }
+        $role = [
+            [
+                "id" => 0,
+                "name" => "User",
+            ],
+            [
+                "id" => 1,
+                "name" => "Admin",
+            ],
+        ];
+        return view("admin.users", compact(["data", "role"]));
     }
 
     public function deleteuser($id)
     {
-        $data= user::find($id);
+        $data = user::find($id);
         $data->delete();
         return redirect()->back();
     }
 
-    public function foodmenu()
+    public function foodmenu(Request $request, $order = null, $sort = null)
     {
-        $data= food::all();
-        return view("admin.foodmenu", compact("data"));
+        if ($sort && $order) {
+            $data = food::orderBy($order, $sort)->get();
+        } elseif ($request->tags) {
+            $data = food::where("tags", $request->tags)->get();
+        } else {
+            $data = food::where("title", "Like", "%" . $request->search . "%")
+                ->orWhere("description", "Like", "%" . $request->search . "%")
+                ->orWhere("price", "Like", "%" . $request->search . "%")
+                ->orWhere("tags", "Like", "%" . $request->search . "%")
+                ->get();
+        }
+        $tags = food::select("tags")->get();
+        $tags = $tags->unique("tags")->values();
+        return view("admin.foodmenu", compact(["data", "tags"]));
     }
 
     public function updateview($id)
     {
-        $data=food::find($id);
-        return view("admin.updateview",compact("data"));
+        $data = food::find($id);
+        return view("admin.updateview", compact("data"));
     }
 
-    public function update(Request $request, $id){
-        $data=food::find($id);
+    public function update(Request $request, $id)
+    {
+        $data = food::find($id);
 
-        $image=$request->image;
+        $image = $request->image;
 
-        $imagename=time().'.'.$image->getClientOriginalExtension();
-                $request->image->move('foodimage',$imagename);
-                $data->image=$imagename;
-                $data->tags=$request->tags;
-                $data->title=$request->title;
-                $data->price=$request->price;
-                $data->description=$request->description;
-                $data->save();
-                return redirect()->back();
-        }
+        $imagename = time() . "." . $image->getClientOriginalExtension();
+        $request->image->move("foodimage", $imagename);
+        $data->image = $imagename;
+        $data->tags = $request->tags;
+        $data->title = $request->title;
+        $data->price = $request->price;
+        $data->description = $request->description;
+        $data->save();
+        return redirect()->back();
+    }
     public function upload(Request $request)
     {
-        $data = new food;
+        $data = new food();
 
-        $image=$request->image;
+        $image = $request->image;
 
-        $imagename=time().'.'.$image->getClientOriginalExtension();
-                $request->image->move('foodimage',$imagename);
-                $data->image=$imagename;
-                $data->title=$request->title;
-                $data->tags=$request->tags;
-                $data->price=$request->price;
-                $data->description=$request->description;
-                $data->save();
-                return redirect()->back();
-            }       
-      public function deletemenu($id)
+        $imagename = time() . "." . $image->getClientOriginalExtension();
+        $request->image->move("foodimage", $imagename);
+        $data->image = $imagename;
+        $data->title = $request->title;
+        $data->tags = $request->tags;
+        $data->price = $request->price;
+        $data->description = $request->description;
+        $data->save();
+        return redirect()->back();
+    }
+    public function deletemenu($id)
     {
-        $data= food::find($id);
+        $data = food::find($id);
         $data->delete();
         return redirect()->back();
     }
 
     public function reservation(Request $request)
     {
-        $data = new reservation;
+        $data = new reservation();
 
-                $data->name=$request->name;
-                $data->email=$request->email;
-                $data->phone=$request->phone;
-                $data->packet=$request->packet;
-                $data->date=$request->date;
-                $data->time=$request->time;
-                $data->message=$request->message;
-                $data->save();
-                return redirect()->back();
-            }     
-            
-            public function viewreservation()
-            {
-                if (Auth::check()) {
-                    // Mendapatkan pengguna yang sedang login
-                    $user = Auth::user();
-                    
-                    // Memeriksa tipe pengguna
-                    if ($user->usertype == 1) {
-                        $data = reservation::all();
-                        return view('admin.adminreservation', compact('data'));
-                    } else {
-
-                        return redirect('login'); // Ubah  sesuai dengan halaman tujuan pengguna biasa
-                    }
-                } else {
-                    return redirect('login');
-                }
-            }
-            
-            public function viewpacket()
-            {
-                if (Auth::check()) {
-                    // Mendapatkan pengguna yang sedang login
-                    $user = Auth::user();
-                    
-                    // Memeriksa tipe pengguna
-                    if ($user->usertype == 1) {
-                        $data = packet::all();
-                        return view('admin.adminpacket', compact('data'));
-                    } else {
-                        // Arahkan pengguna biasa ke halaman lain, misalnya halaman home
-                        return redirect('login'); // Ubah 'home' sesuai dengan halaman tujuan pengguna biasa
-                    }
-                } else {
-                    return redirect('login');
-                }
-            }
-            
-            public function uploadpacket(Request $request)
-            {
-                if (Auth::check()) {
-                    // Mendapatkan pengguna yang sedang login
-                    $user = Auth::user();
-                    
-                    // Memeriksa tipe pengguna
-                    if ($user->usertype == 1) {
-                        $data = new packet;
-                        $image = $request->image;
-                        $imagename = time().'.'.$image->getClientOriginalExtension();
-                        $request->image->move('packetimage', $imagename);
-                        $data->image = $imagename;
-                        $data->name = $request->name;
-                        $data->description = $request->description;
-                        $data->save();
-                        return redirect()->back();
-                    } else {
-                        // Arahkan pengguna biasa ke halaman lain, misalnya halaman home
-                        return redirect('home'); // Ubah 'home' sesuai dengan halaman tujuan pengguna biasa
-                    }
-                } else {
-                    return redirect('login');
-                }
-            }
-            
-    public function updatepacket($id){
-        $data=packet::find($id);
-
-        return view("admin.updatepacket",compact("data"));
+        $data->name = $request->name;
+        $data->email = $request->email;
+        $data->phone = $request->phone;
+        $data->packet = $request->packet;
+        $data->date = $request->date;
+        $data->time = $request->time;
+        $data->message = $request->message;
+        $data->save();
+        return redirect()->back();
     }
 
-    public function updatefoodpacket(Request $request, $id){
-        $data=packet::find($id);
+    public function viewreservation(
+        Request $request,
+        $order = null,
+        $sort = null
+    ) {
+        if (Auth::check()) {
+            // Mendapatkan pengguna yang sedang login
+            $user = Auth::user();
 
-        $image=$request->image;
-        if($image){
-            
-
-            $imagename=time().'.'.$image->getClientOriginalExtension();
-                    $request->image->move('packetimage',$imagename);
-                    $data->image=$imagename;
+            // Memeriksa tipe pengguna
+            if ($user->usertype == 1) {
+                if ($sort && $order) {
+                    $data = reservation::orderBy($order, $sort)->get();
+                } elseif ($request->min && $request->max) {
+                    $data = reservation::whereBetween("date", [
+                        $request->min,
+                        $request->max,
+                    ])->get();
+                } else {
+                    $data = reservation::where(
+                        "name",
+                        "Like",
+                        "%" . $request->search . "%"
+                    )
+                        ->orWhere("email", "Like", "%" . $request->search . "%")
+                        ->orWhere("phone", "Like", "%" . $request->search . "%")
+                        ->orWhere(
+                            "message",
+                            "Like",
+                            "%" . $request->search . "%"
+                        )
+                        ->get();
+                }
+                return view("admin.adminreservation", compact("data"));
+            } else {
+                return redirect("login"); // Ubah  sesuai dengan halaman tujuan pengguna biasa
+            }
+        } else {
+            return redirect("login");
         }
-       
-
-                $data->name=$request->name;
-                $data->description=$request->description;
-                $data->save();
-                return redirect()->back();
-        
     }
 
-    public function deletepacket($id){
-        $data=packet::find($id);
+    public function viewpacket(Request $request, $order = null, $sort = null)
+    {
+        if (Auth::check()) {
+            // Mendapatkan pengguna yang sedang login
+            $user = Auth::user();
+
+            // Memeriksa tipe pengguna
+            if ($user->usertype == 1) {
+                if ($sort && $order) {
+                    $data = packet::orderBy($order, $sort)->get();
+                } else {
+                    $data = packet::where(
+                        "name",
+                        "Like",
+                        "%" . $request->search . "%"
+                    )->get();
+                }
+                return view("admin.adminpacket", compact("data"));
+            } else {
+                // Arahkan pengguna biasa ke halaman lain, misalnya halaman home
+                return redirect("login"); // Ubah 'home' sesuai dengan halaman tujuan pengguna biasa
+            }
+        } else {
+            return redirect("login");
+        }
+    }
+
+    public function uploadpacket(Request $request)
+    {
+        if (Auth::check()) {
+            // Mendapatkan pengguna yang sedang login
+            $user = Auth::user();
+
+            // Memeriksa tipe pengguna
+            if ($user->usertype == 1) {
+                $data = new packet();
+                $image = $request->image;
+                $imagename =
+                    time() . "." . $image->getClientOriginalExtension();
+                $request->image->move("packetimage", $imagename);
+                $data->image = $imagename;
+                $data->name = $request->name;
+                $data->description = $request->description;
+                $data->save();
+                return redirect()->back();
+            } else {
+                // Arahkan pengguna biasa ke halaman lain, misalnya halaman home
+                return redirect("home"); // Ubah 'home' sesuai dengan halaman tujuan pengguna biasa
+            }
+        } else {
+            return redirect("login");
+        }
+    }
+
+    public function updatepacket($id)
+    {
+        $data = packet::find($id);
+
+        return view("admin.updatepacket", compact("data"));
+    }
+
+    public function updatefoodpacket(Request $request, $id)
+    {
+        $data = packet::find($id);
+
+        $image = $request->image;
+        if ($image) {
+            $imagename = time() . "." . $image->getClientOriginalExtension();
+            $request->image->move("packetimage", $imagename);
+            $data->image = $imagename;
+        }
+
+        $data->name = $request->name;
+        $data->description = $request->description;
+        $data->save();
+        return redirect()->back();
+    }
+
+    public function deletepacket($id)
+    {
+        $data = packet::find($id);
         $data->delete();
         return redirect()->back();
     }
 
-    public function orders()
+    public function orders(Request $request, $order = null, $sort = null)
     {
-        $data=order::all();
-        return view('admin.orders',compact('data'));
+        if ($sort && $order) {
+            $data = order::orderBy($order, $sort)->get();
+        } else {
+            $data = order::all();
+        }
+
+        if ($request->min && $request->max) {
+            foreach ($data as $value) {
+                $value->total = $value->price * $value->quantity;
+            }
+
+            $data = $data
+                ->whereBetween("total", [$request->min, $request->max])
+                ->values();
+        }
+
+        return view("admin.orders", compact("data"));
     }
     public function search(Request $request)
     {
-        $search=$request->search;
-        $data=order::where('name','ILike','%'.$search.'%')->orWhere('foodname','ILike','%'.$search.'%')->orWhere('address','ILike','%'.$search.'%')->orWhere('phone','ILike','%'.$search.'%')->get();
-        
-        return view('admin.orders',compact('data'));
+        $search = $request->search;
+        $data = order::where("name", "Like", "%" . $search . "%")
+            ->orWhere("foodname", "Like", "%" . $search . "%")
+            ->orWhere("address", "Like", "%" . $search . "%")
+            ->orWhere("phone", "Like", "%" . $search . "%")
+            ->get();
+
+        return view("admin.orders", compact("data"));
     }
 }

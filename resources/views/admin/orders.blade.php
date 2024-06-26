@@ -16,6 +16,13 @@
     <input type="text" name="search" style="color:blue;">
     <input type="submit" value="search" class="btn btn-success;">
   </form>
+
+  <form class="mt-3" style="position:relative; left:130px" action="{{url('/orders')}}" method="get">
+    <input type="number" name="min" placeholder="min. total price" style="color:blue;">
+    <span>-</span>
+    <input type="number" name="max" placeholder=" max. total price" style="color:blue;">
+    <input type="submit" value="filter" class="btn btn-success;">
+  </form>
 <br>
   <style>
   table {
@@ -45,16 +52,23 @@
   td {
     vertical-align: middle;
   }
+
+  .fa-solid{
+    color: white;
+  }
+  .fa-solid:hover{
+    color: lightgray;
+  }
 </style>
 
 <table>
   <tr>
-    <th style="padding:10px">Name</th>
-    <th style="padding:10px">Phone</th>
+    <th style="padding:10px">Name <a href="{{url('/orders/name/asc')}}"><i class="fa-solid fa-arrow-up-wide-short"></i></a> <a href="{{url('/orders/name/desc')}}"><i class="fa-solid fa-arrow-down-wide-short"></i></a></th>
+    <th style="padding:10px">Phone </th>
     <th style="padding:10px">Address</th>
-    <th style="padding:10px">Food Name</th>
-    <th style="padding:10px">Price</th>
-    <th style="padding:10px">Quantity</th>
+    <th style="padding:10px">Food Name <a href="{{url('/orders/foodname/asc')}}"><i class="fa-solid fa-arrow-up-wide-short"></i></a> <a href="{{url('/orders/foodname/desc')}}"><i class="fa-solid fa-arrow-down-wide-short"></i></a></th>
+    <th style="padding:10px">Price <a href="{{url('/orders/price/asc')}}"><i class="fa-solid fa-arrow-up-wide-short"></i></a> <a href="{{url('/orders/price/desc')}}"><i class="fa-solid fa-arrow-down-wide-short"></i></a></th>
+    <th style="padding:10px">Quantity <a href="{{url('/orders/quantity/asc')}}"><i class="fa-solid fa-arrow-up-wide-short"></i></a> <a href="{{url('/orders/quantity/desc')}}"><i class="fa-solid fa-arrow-down-wide-short"></i></a></th>
     <th style="padding:10px">Total Price</th>
   </tr>
   @foreach($data as $data)
@@ -72,8 +86,8 @@
 </table>
 </div>
   </div>
-   
+
     @include("admin.adminscript")
   </body>
-  
+
 </html>

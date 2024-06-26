@@ -26,7 +26,7 @@
         top: 10px;
         left: 150px;
     }
-    
+
     .form-group {
         margin-bottom: 20px;
     }
@@ -115,10 +115,23 @@
 
     <div>
         <br>
+        <form style="position:relative; left:150px" action="{{url('/foodmenu')}}" method="get">
+            <input type="text" name="search" style="color:blue;">
+            <input type="submit" value="search" class="btn btn-success;">
+          </form>
+
+          <form class="mt-3" style="position:relative; left:150px" action="{{url('/foodmenu')}}" method="get">
+            <select style="color:blue;" name="tags" id="">
+                @foreach($tags as $value)
+                <option value="{{$value->tags}}">{{$value->tags}}</option>
+                @endforeach
+            </select>
+            <input type="submit" value="filter" class="btn btn-success;">
+          </form>
         <style>
     .table-container {
         max-width: 100%;
-        
+
         font-family: Arial, sans-serif;
     }
 
@@ -166,13 +179,20 @@
     .action-btn:hover {
         background-color: #45a049;
     }
+
+    .fa-solid{
+    color: white;
+  }
+  .fa-solid:hover{
+    color: lightgray;
+  }
 </style>
 
 <div class="table-container">
     <table>
         <tr>
-            <th>Food Name</th>
-            <th>Price</th>
+            <th>Food Name <a href="{{url('/foodmenu/title/asc')}}"><i class="fa-solid fa-arrow-up-wide-short"></i></a> <a href="{{url('/foodmenu/title/desc')}}"><i class="fa-solid fa-arrow-down-wide-short"></i></a></th>
+            <th>Price <a href="{{url('/foodmenu/price/asc')}}"><i class="fa-solid fa-arrow-up-wide-short"></i></a> <a href="{{url('/foodmenu/price/desc')}}"><i class="fa-solid fa-arrow-down-wide-short"></i></a></th>
             <th>Description</th>
             <th>Tags</th>
             <th>Image</th>
@@ -203,5 +223,5 @@
 
     @include("admin.adminscript")
   </body>
-  
+
 </html>
