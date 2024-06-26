@@ -8,7 +8,7 @@
       cluster: 'ap1'
     });
 
-    var channel = pusher.subscribe('popup-channel');
+    var channel = pusher.subscribe('App.Models.User.' + @json(auth()->user()->id));
     channel.bind('payment', function(data) {
         // alert(JSON.stringify(data.name))
         toastr.success("Pembayaran berhasil diverifikasi, pesanan anda sedang diproses.");

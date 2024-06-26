@@ -73,7 +73,9 @@
                             <li class="scroll-to-section"><a href="{{url('/redirects')}}">Menu</a></li>
                             <li class="scroll-to-section"><a href="{{url('/redirects')}}">Package</a></li>
                             <li class="scroll-to-section"><a href="{{url('/redirects')}}">Category</a></li>
-                            <li class="scroll-to-section"><a href="{{url('/history',Auth::user()->id)}}">History</a></li>                            <!-- <li class=""><a rel="sponsored" href="https://templatemo.com" target="_blank">External URL</a></li> -->
+                            @auth
+                            <li class="scroll-to-section"><a href="{{url('/history',Auth::user()->id)}}">History</a></li>
+                            @endauth                         <!-- <li class=""><a rel="sponsored" href="https://templatemo.com" target="_blank">External URL</a></li> -->
                             <li class="scroll-to-section"><a href="{{url('/redirects')}}">Contact Us</a></li>
 
                             <li class="scroll-to-section"><a href="{{url('/redirects')}}">

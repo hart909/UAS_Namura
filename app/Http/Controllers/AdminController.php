@@ -329,8 +329,9 @@ class AdminController extends Controller
             FILTER_VALIDATE_BOOLEAN
         );
         $data->save();
+        $user = User::find($data->created_by);
         if ($data->status) {
-            event(new PaymentApprovalEvent($data->status));
+            event(new PaymentApprovalEvent($user, $data->status));
         }
 
         return redirect()->route("payments");

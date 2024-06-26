@@ -25,11 +25,12 @@
     <link rel="stylesheet" href="assets/css/owl-carousel.css">
 
     <link rel="stylesheet" href="assets/css/lightbox.css">
+    @include("pusher")
 
     </head>
-    
+
     <body>
-    
+
     <!-- ***** Preloader Start ***** -->
     <div id="preloader">
         <div class="jumper">
@@ -37,10 +38,10 @@
             <div></div>
             <div></div>
         </div>
-    </div>  
+    </div>
     <!-- ***** Preloader End ***** -->
-    
-    
+
+
     <!-- ***** Header Area Start ***** -->
     <header class="header-area header-sticky">
         <div class="container">
@@ -56,8 +57,8 @@
                         <ul class="nav">
                             <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
                             <li class="scroll-to-section"><a href="#about">About</a></li>
-                           	
-                        <!-- 
+
+                        <!--
                             <li class="submenu">
                                 <a href="javascript:;">Drop Down</a>
                                 <ul>
@@ -68,11 +69,11 @@
                             </li>
                         -->
                             <li class="scroll-to-section"><a href="#menu">Menu</a></li>
-                            <li class="scroll-to-section"><a href="#packet">Package</a></li> 
+                            <li class="scroll-to-section"><a href="#packet">Package</a></li>
                             <li class="scroll-to-section"><a href="#category">Category</a></li>
-                        
+
                             <li class="scroll-to-section"><a href="#reservation">Contact Us</a></li>
-                            
+
                             <li class="scroll-to-section"><a href="#reservation">
 @auth
 <a href="{{url('/showcart',Auth::user()->id)}}"><svg style="position: relative; top:-30px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
@@ -86,9 +87,9 @@
 </svg>
 @endguest
 </a></li>
-                           
-                           
-                           
+
+
+
                             <li>
                            @if (Route::has('login'))
                 <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right">
@@ -107,8 +108,8 @@
             @endif
 
 
-                           </li> 
-                        </ul>        
+                           </li>
+                        </ul>
                         <a class='menu-trigger'>
                             <span></span>
                         </a>
@@ -125,7 +126,7 @@
         <div class="owl-menu-item owl-carousel">
             @foreach($foods as $food)
                 <form action="{{ url('/addcart', $food->id) }}" method="post">
-                    @csrf    
+                    @csrf
                     <div class="item">
                         <div style="background-image: url('/foodimage/{{ $food->image }}');" class='card'>
                             <div class="price"><h6>{{ $food->price }}</h6></div>
@@ -160,10 +161,10 @@
 <script src="assets/js/scrollreveal.min.js"></script>
 <script src="assets/js/waypoints.min.js"></script>
 <script src="assets/js/jquery.counterup.min.js"></script>
-<script src="assets/js/imgfix.min.js"></script> 
-<script src="assets/js/slick.js"></script> 
-<script src="assets/js/lightbox.js"></script> 
-<script src="assets/js/isotope.js"></script> 
+<script src="assets/js/imgfix.min.js"></script>
+<script src="assets/js/slick.js"></script>
+<script src="assets/js/lightbox.js"></script>
+<script src="assets/js/isotope.js"></script>
 
 <!-- Global Init -->
 <script src="assets/js/custom.js"></script>
@@ -179,7 +180,7 @@
           $("."+selectedClass).fadeIn();
           $("#portfolio").fadeTo(50, 1);
         }, 500);
-            
+
         });
     });
 

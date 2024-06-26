@@ -25,6 +25,8 @@
     <link rel="stylesheet" href="assets/css/owl-carousel.css">
 
     <link rel="stylesheet" href="assets/css/lightbox.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    @include("pusher")
 
     </head>
 
@@ -70,7 +72,9 @@
                             <li class="scroll-to-section"><a href="#menu">Menu</a></li>
                             <li class="scroll-to-section"><a href="#packet">Package</a></li>
                             <li class="scroll-to-section"><a href="#category">Category</a></li>
-                            <li class="scroll-to-section"><a href="{{url('/history',Auth::user()->id)}}">History</a></li>                            <!-- <li class=""><a rel="sponsored" href="https://templatemo.com" target="_blank">External URL</a></li> -->
+                            @auth
+                            <li class="scroll-to-section"><a href="{{url('/history',Auth::user()->id)}}">History</a></li>
+                            @endauth                          <!-- <li class=""><a rel="sponsored" href="https://templatemo.com" target="_blank">External URL</a></li> -->
 
                             <!-- <li class=""><a rel="sponsored" href="https://templatemo.com" target="_blank">External URL</a></li> -->
                             <li class="scroll-to-section"><a href="#reservation">Contact Us</a></li>

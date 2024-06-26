@@ -9,18 +9,20 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use App\Models\User;
 
 class PaymentApprovalEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-
+    public $user;
     public $name;
 
     /**
      * Create a new event instance.
      */
-    public function __construct($name)
+    public function __construct(User $user, $name)
     {
+        $this->user = $user;
         $this->name = $name;
     }
 
@@ -31,7 +33,8 @@ class PaymentApprovalEvent implements ShouldBroadcast
      */
     public function broadcastOn(): array
     {
-        return [new Channel("popup-channel")];
+        // return [new Channel("popup-channel")];
+        return [new Channel("App.Models.User." . $this->user->id)];
     }
 
     public function broadcastAs()
