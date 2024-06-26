@@ -20,3 +20,6 @@
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" />
 
     <script src="https://kit.fontawesome.com/75f1861d61.js" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    @include('adminPusher')

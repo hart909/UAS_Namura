@@ -12,6 +12,7 @@ use App\Models\Packet;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Events\PaymentApprovalEvent;
+use App\Events\ReservationEvent;
 
 class AdminController extends Controller
 {
@@ -125,6 +126,8 @@ class AdminController extends Controller
         $data->time = $request->time;
         $data->message = $request->message;
         $data->save();
+
+        event(new ReservationEvent());
         return redirect()->back();
     }
 
