@@ -88,6 +88,7 @@
         <p>Inspired by the East</p>
       </div>
     </div>
+    </a>
   </div>
 </body>
 </html>

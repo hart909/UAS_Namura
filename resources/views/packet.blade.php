@@ -3,8 +3,8 @@
             <div class="row">
                 <div class="col-lg-4 offset-lg-4 text-center">
                     <div class="section-heading">
-                        <h6>Our Packets</h6>
-                        <h2>We offer several packets suitable for your events</h2>
+                        <h6>Our Package</h6>
+                        <h2>We offer several package suitable for your events</h2>
                     </div>
                 </div>
             </div>
