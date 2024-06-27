@@ -74,14 +74,14 @@
                             <li class="scroll-to-section"><a href="#menu">Menu</a></li>
                             <li class="scroll-to-section"><a href="#packet">Package</a></li>
                             <li class="scroll-to-section"><a href="#category">Category</a></li>
+                            <li class="scroll-to-section"><a href="#testimonial">Testimonial</a></li>
                             @auth
                             <li class="scroll-to-section"><a href="{{url('/history',Auth::user()->id)}}">History</a></li>
                             @endauth                          <!-- <li class=""><a rel="sponsored" href="https://templatemo.com" target="_blank">External URL</a></li> -->
 
                             <!-- <li class=""><a rel="sponsored" href="https://templatemo.com" target="_blank">External URL</a></li> -->
-                            <li class="scroll-to-section"><a href="#reservation">Contact Us</a></li>
-
-                            <li class="scroll-to-section"><a href="#reservation">
+                            
+                            <li class="scroll-to-section"><a href="#category">
 @auth
 <a href="{{url('/showcart',Auth::user()->id)}}"><svg style="position: relative; top:-30px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
   <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
@@ -187,15 +187,8 @@
                         </div>
                         <p>Tempat makan yang cocok untuk masyarakat untuk rasakan sensasi masakan oriental. Banyak varians menu yang bisa anda rasakan untuk menggugah selera Anda. Datang Langsung atau order melalui online sekarang tersedia</p>
                         <div class="row">
-                            <div class="col-4">
-                                <img src="assets/images/about-thumb-01.jpg" alt="">
-                            </div>
-                            <div class="col-4">
-                                <img src="assets/images/about-thumb-02.jpg" alt="">
-                            </div>
-                            <div class="col-4">
-                                <img src="assets/images/about-thumb-03.jpg" alt="">
-                            </div>
+                            
+                            
                         </div>
                     </div>
                 </div>
@@ -223,30 +216,24 @@
 
     @include("category")
 
-    <!-- ***** Chefs Area Ends ***** -->
+    @include("testimonial")
 
     <!-- ***** Footer Start ***** -->
     <footer>
         <div class="container">
+        <p style="color:white;position:relative; top:40px;left:650px">@Developed 2024 By FGA</p>
             <div class="row">
-                <div class="col-lg-4 col-xs-12">
-                    <div class="right-text-content">
-                            <ul class="social-icons">
-                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                            </ul>
-                    </div>
-                </div>
                 <div class="col-lg-4">
                     <div class="logo">
-                        <a href=""><img src="assets/images/white-logo.png" alt=""></a>
+                        <a href="/redirects"><img style="width:250px;height:auto;"src="assets/images/logo.png" alt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-4 col-xs-12">
+                
                     <div class="left-text-content">
+                        
                     </div>
+                    
                 </div>
             </div>
         </div>

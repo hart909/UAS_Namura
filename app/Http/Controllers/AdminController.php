@@ -13,6 +13,7 @@ use App\Models\Order;
 use App\Models\Payment;
 use App\Events\PaymentApprovalEvent;
 use App\Events\ReservationEvent;
+use App\Models\Testimonial;
 
 class AdminController extends Controller
 {
@@ -226,12 +227,45 @@ class AdminController extends Controller
             return redirect("login");
         }
     }
+    public function uploadtestimonial(Request $request)
+    {
+        if (Auth::check()) {
+            // Mendapatkan pengguna yang sedang login
+            $user = Auth::user();
+
+            // Memeriksa tipe pengguna
+            if ($user->usertype == 1) {
+                $data = new testimonial();
+                $image = $request->image;
+                $imagename =
+                    time() . "." . $image->getClientOriginalExtension();
+                $request->image->move("testimonialimage", $imagename);
+                $data->image = $imagename;
+                $data->title = $request->title;
+                $data->description = $request->description;
+                $data->save();
+                return redirect()->back();
+            } else {
+                // Arahkan pengguna biasa ke halaman lain, misalnya halaman home
+                return redirect("home"); // Ubah 'home' sesuai dengan halaman tujuan pengguna biasa
+            }
+        } else {
+            return redirect("login");
+        }
+    }
 
     public function updatepacket($id)
     {
         $data = packet::find($id);
 
         return view("admin.updatepacket", compact("data"));
+    }
+
+    public function updatetestimonial($id)
+    {
+        $data = testimonial::find($id);
+
+        return view("admin.updatetestimonial", compact("data"));
     }
 
     public function updatefoodpacket(Request $request, $id)
@@ -251,9 +285,32 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
+    public function updatetestimonialpage(Request $request, $id)
+    {
+        $data = testimonial::find($id);
+
+        $image = $request->image;
+        if ($image) {
+            $imagename = time() . "." . $image->getClientOriginalExtension();
+            $request->image->move("testimonialimage", $imagename);
+            $data->image = $imagename;
+        }
+
+        $data->title = $request->title;
+        $data->description = $request->description;
+        $data->save();
+        return redirect()->back();
+    }
+
     public function deletepacket($id)
     {
         $data = packet::find($id);
+        $data->delete();
+        return redirect()->back();
+    }
+    public function deletetestimonial($id)
+    {
+        $data = testimonial::find($id);
         $data->delete();
         return redirect()->back();
     }
@@ -338,5 +395,31 @@ class AdminController extends Controller
         }
 
         return redirect()->route("payments");
+    }
+    public function viewtestimonial(Request $request, $order = null, $sort = null)
+    {
+        if (Auth::check()) {
+            // Mendapatkan pengguna yang sedang login
+            $user = Auth::user();
+
+            // Memeriksa tipe pengguna
+            if ($user->usertype == 1) {
+                if ($sort && $order) {
+                    $data = testimonial::orderBy($order, $sort)->get();
+                } else {
+                    $data = testimonial::where(
+                        "title",
+                        "Like",
+                        "%" . $request->search . "%"
+                    )->get();
+                }
+                return view("admin.testimonial", compact("data"));
+            } else {
+                // Arahkan pengguna biasa ke halaman lain, misalnya halaman home
+                return redirect("login"); // Ubah 'home' sesuai dengan halaman tujuan pengguna biasa
+            }
+        } else {
+            return redirect("login");
+        }
     }
 }

@@ -11,6 +11,7 @@ use App\Models\Packet;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Payment;
+use App\Models\Testimonial;
 
 class HomeController extends Controller
 {
@@ -56,20 +57,19 @@ class HomeController extends Controller
             $data = food::all();
         }
         $data2 = packet::all();
-        return view("home", compact("data", "data2", "isSearch"));
+        $data3= testimonial::all();
+        return view("home", compact("data", "data2","data3", "isSearch"));
     }
 
     public function redirects(Request $request)
     {
         $isSearch = false;
         if ($request->search) {
-            $data = food::where(
-                "title",
-                "Like",
-                "%" . $request->search . "%"
-            )->get();
+            $searchTerm = strtolower($request->search);
+            $data = food::whereRaw('LOWER(title) LIKE ?', ["%{$searchTerm}%"])->get();
             $isSearch = true;
-        } elseif ($request->min && $request->max) {
+        }
+        elseif ($request->min && $request->max) {
             $data = food::whereBetween("price", [
                 $request->min,
                 $request->max,
