@@ -47,6 +47,8 @@ Route::get("/updatepacket/{id}", [AdminController::class, "updatepacket"]); // R
 
 Route::get("/updatetestimonial/{id}", [AdminController::class, "updatetestimonial"]); // Rute untuk memperbarui testimonial berdasarkan ID
 
+Route::post("/updatetestimonialpage/{id}", [AdminController::class, "updatetestimonialpage"]); // Rute untuk memperbarui testimonial berdasarkan ID
+
 Route::post("/updatefoodpacket/{id}", [AdminController::class, "updatefoodpacket"]); // Rute untuk memperbarui paket makanan berdasarkan ID
 
 Route::post("/orderconfirm", [HomeController::class, "orderconfirm"]); // Rute untuk mengkonfirmasi pesanan
@@ -69,6 +71,10 @@ Route::get("/bestseller/{tags}", [HomeController::class, "bestseller"]); // Rute
 Route::get("/signature/{tags}", [HomeController::class, "signature"]); // Rute untuk melihat produk signature berdasarkan tag
 Route::get("/oriental/{tags}", [HomeController::class, "oriental"]); // Rute untuk melihat produk oriental berdasarkan tag
 
+Route::post("/contact", [HomeController::class, "contact"]);
+Route::get("/all_messages/{order?}/{sort?}", [AdminController::class, "all_messages"]);
+Route::get("/send_mail/{id}", [AdminController::class, "send_mail"]);
+Route::post("/mail/{id}", [AdminController::class, "mail"]);
 Route::get("/redirects", [HomeController::class, "redirects"])->name("redirects"); // Rute untuk pengalihan, dengan nama rute "redirects"
 
 Route::middleware([
@@ -85,4 +91,6 @@ Route::get("/payments", [AdminController::class, "payment"])->name("payments"); 
 Route::get("/payments/status", [AdminController::class, "paymentStatus"]); // Rute untuk status pembayaran
 
 Route::get("/history/{id}", [HomeController::class, "history"]); // Rute untuk melihat riwayat berdasarkan ID pengguna
+
+
 ?>

@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Namura</title>
 <!--
 
@@ -30,6 +30,38 @@
     @include("pusher")
     @endauth
 
+    <style>
+        /* CSS Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+/* Responsif untuk gambar */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Sesuaikan kontainer utama */
+.container-fluid {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* Tambahan untuk elemen lain yang berpotensi menyebabkan overflow */
+.main-banner, .header-text, .Modern-Slider, .item, .img-fill {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+    </style>
     </head>
 
     <body>
@@ -218,6 +250,7 @@
 
     @include("testimonial")
 
+    @include("contact")
     <!-- ***** Footer Start ***** -->
     <footer>
         <div class="container">

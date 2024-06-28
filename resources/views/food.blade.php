@@ -24,6 +24,19 @@
         }
     </style>
         <div class="container">
+        @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: '{{ session('success') }}',
+                timer: 3000,
+                showConfirmButton: false
+            });
+        </script>
+    @endif
+    
+
             <div class="row">
                 <div class="col-lg-4">
                     <div class="section-heading">
@@ -88,3 +101,15 @@
         </div>
     </section>
     <!-- ***** Menu Area Ends ***** -->
+     {{--Script untuk tetap di halaman--}}
+    <script type="text/javascript"> 
+   $(window).scroll(function() {
+  sessionStorage.scrollTop = $(this).scrollTop();
+});
+
+$(document).ready(function(){
+   if(sessionStorage.scrollTop != "undefined"){
+      $(window).scrollTop(sessionStorage.scrollTop);
+   }
+});
+   </script>
