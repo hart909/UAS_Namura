@@ -14,6 +14,9 @@ use App\Models\Payment;
 use App\Events\PaymentApprovalEvent;
 use App\Events\ReservationEvent;
 use App\Models\Testimonial;
+use App\Models\Contact;
+use Notification;
+use App\Notifications\SendEmailNotification;
 
 class AdminController extends Controller
 {
@@ -129,6 +132,7 @@ class AdminController extends Controller
         $data->save();
 
         event(new ReservationEvent());
+        session()->flash('success', 'Reservasi berhasil dibuat!');
         return redirect()->back();
     }
 
@@ -422,4 +426,36 @@ class AdminController extends Controller
             return redirect("login");
         }
     }
+    public function all_messages($order = 'name', $sort = 'asc'){
+        // Pastikan sortasi valid
+        $validSortDirections = ['asc', 'desc'];
+    
+        if (in_array($sort, $validSortDirections)) {
+            $data = Contact::orderBy($order, $sort)->get();
+        } else {
+            $data = Contact::orderBy('name', 'asc')->get(); // Default sorting jika sortasi tidak valid
+        }
+    
+        return view('admin.all_messages', compact('data'));
+    }
+    public function send_mail($id){
+        $data = Contact::find($id);
+        return view('admin.send_mail',compact('data'));
+    }
+    public function mail(Request $request,$id)
+{
+    $data = Contact::find($id);
+    $details = [
+        'greeting' => $request->greeting,
+        'body' => $request->body,
+        'action_text' => $request->action_text,
+        'action_url' => $request->action_url,
+        'endline' => $request->endline,
+    ];
+
+    Notification::send($data, new SendEmailNotification($details));
+    session()->flash('success', 'Email Sudah Terkirim ke Pengguna');
+    return redirect()->back();
+}
+    
 }

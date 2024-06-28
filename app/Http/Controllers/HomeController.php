@@ -12,6 +12,7 @@ use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Models\Testimonial;
+use App\Models\Contact;
 
 class HomeController extends Controller
 {
@@ -80,16 +81,18 @@ class HomeController extends Controller
             $isSearch = true;
         } else {
             $data = food::all();
+            $data3= testimonial::all();
         }
         $data2 = packet::all();
         $usertype = Auth::user()->usertype;
-
+        
         if ($usertype == "1") {
             return view("admin.adminhome");
         } else {
+            $data3= testimonial::all();
             $user_id = Auth::id();
             $count = cart::where("user_id", $user_id)->count();
-            return view("home", compact("data", "data2", "count", "isSearch"));
+            return view("home", compact("data", "data2","data3", "count", "isSearch"));
         }
     }
 
@@ -105,7 +108,7 @@ class HomeController extends Controller
             $cart->food_id = $foodid;
             $cart->quantity = $quantity;
             $cart->save();
-
+            session()->flash('success', 'Add To Cart Succesfully');
             return redirect()->back();
         } else {
             return redirect("/login");
@@ -129,7 +132,12 @@ class HomeController extends Controller
     public function remove($id)
     {
         $data = cart::find($id);
-        $data->delete();
+        if ($data) {
+            $data->delete();
+            session()->flash('success', 'Item berhasil dihapus dari keranjang!');
+        } else {
+            session()->flash('error', 'Item tidak ditemukan!');
+        }
 
         return redirect()->back();
     }
@@ -158,7 +166,7 @@ class HomeController extends Controller
 
             $data->save();
         }
-
+        session()->flash('successconfirm', 'Pesanan Anda Berhasil dipesan!');
         return redirect()->back();
     }
 
@@ -213,5 +221,17 @@ class HomeController extends Controller
         } else {
             return redirect()->back();
         }
+    }
+    public function contact(Request $request){
+
+        $contact = new Contact;
+        $contact->name = $request->name;
+        $contact->email = $request->email;
+        $contact->phone = $request->phone;
+        $contact->message = $request->message;
+        $contact->save();
+        session()->flash('success', 'Message Sent Successfully!');
+        return redirect()->back();
+
     }
 }

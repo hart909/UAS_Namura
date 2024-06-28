@@ -126,6 +126,41 @@
         </div>
     </header>
     <!-- ***** Header Area End ***** -->
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                iconHtml: '<i class="fa fa-trash"></i>', // Gunakan ikon FontAwesome
+                customClass: {
+                    icon: 'swal2-trash'
+                },
+                title: 'Berhasil!',
+                text: '{{ session('success') }}',
+                timer: 3000,
+                showConfirmButton: false
+            });
+        </script>
+    @elseif (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal!',
+                text: '{{ session('error') }}',
+                timer: 3000,
+                showConfirmButton: false
+            });
+        </script>
+    @endif
+    @if (session('successconfirm'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: '{{ session('success') }}',
+                timer: 5000,
+                showConfirmButton: false
+            });
+        </script>
+    @endif
     <div id="top">
     <table align="center" style="width: 80%; border-collapse: collapse;">
     <tr style="background-color: #333; color: #fff;">
