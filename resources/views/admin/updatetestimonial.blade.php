@@ -17,7 +17,7 @@
     @csrf
     <div>
         <label >Title</label>
-        <input style="color:black;" type="text" name="name" value="{{$data->name}}">
+        <input style="color:black;" type="text" name="title" value="{{$data->title}}">
     </div>
     <div>
         <label >Description</label>

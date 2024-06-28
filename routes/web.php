@@ -47,6 +47,8 @@ Route::get("/updatepacket/{id}", [AdminController::class, "updatepacket"]); // R
 
 Route::get("/updatetestimonial/{id}", [AdminController::class, "updatetestimonial"]); // Rute untuk memperbarui testimonial berdasarkan ID
 
+Route::post("/updatetestimonialpage/{id}", [AdminController::class, "updatetestimonialpage"]); // Rute untuk memperbarui testimonial berdasarkan ID
+
 Route::post("/updatefoodpacket/{id}", [AdminController::class, "updatefoodpacket"]); // Rute untuk memperbarui paket makanan berdasarkan ID
 
 Route::post("/orderconfirm", [HomeController::class, "orderconfirm"]); // Rute untuk mengkonfirmasi pesanan
